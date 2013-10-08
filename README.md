@@ -12,3 +12,9 @@ Codigo por ejemplo:
     {{#usuario}}
       {{nombre}}
     {{/usuario}}
+    
+##Referencias de interes:
+
+-  Pagina oficial de Mustache: http://mustache.github.io/
+
+
