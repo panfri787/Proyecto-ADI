@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title></title>
+		<meta charset="utf-8">
+	</head>
+
+	<body>
+		<h1>Muevete.org</h1>
+		<h2>Cambia el mundo</h2>
+		{{#destacadas}}
+			<img width="200" src="img/peticiones/{{id}}.jpg">
+			{{titulo}} 
+			<a href="/peticion?id={{id}}">Ver peticion</a> <br>
+		{{/destacadas}}
+	</body>
+</html>
