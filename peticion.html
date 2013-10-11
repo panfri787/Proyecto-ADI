@@ -25,7 +25,7 @@
 	<div class="container">
 		<div class="page-header" id="banner">
         <div class="row">
-          <div class="col-lg-8">
+          <div class="col-lg-12">
             <h1>{{peticion.titulo}}</h1>
           </div>
         </div>
@@ -124,23 +124,50 @@
         </div>
       </div>
 
-		<div id="actualizaciones">
-			<div id="actualizacion">
-				<h2>Actualizaciones a la petición</h2>
-				<span>10/10/2013</span> <span>Hemos alcanzado 5 firmas.</span>
-				<div id="imagenActualizacion"> Imagen </div>
-			</div>
-
-		</div>
-
-		<div id="firmasRecientes">
-			<h2>Firmas recientes</h2>
-			<div id="firmaReciente">
-				<span><b>Pablo Verdú Romero</b></span> <span>firmó la peticion hace 2 minutos.</span>
-				<div id="Motivos"><i>"Firmo esta peticion porque me lo estoy currando"</i></div>
-			</div>
+      <div class="row">
+      	<div class="col-lg-6">
+      		<h2 class="text-primary">Actualizaciones</h2>
+      		<ul class="list-group">
+      			<li class="list-group-item">
+      				<span class="badge">10/10/2013</span>
+      				Alcanzadas 5 firmas.	
+      			</li>
+      			<li class="list-group-item">
+      				<span class="badge">05/08/2013</span>
+      				Abierta la peticion
+      				<p>
+      					<img src="img/peticiones/{{peticion.id}}.jpg" width="72">
+      				</p>
+      			</li>
+      		</ul>
+      	</div>
+      	<div class="col-lg-6">
+      		<h2 class="text-primary">Firmas recientes</h2>
+      		<blockquote>
+      			<p>
+      				"Firmo esta petición porque me lo estoy currando"
+      			</p>
+      			<small>
+      				<b>Pablo Verdú Romero</b> hace 2 minutos.
+      			</small>
+      		</blockquote>
+      		<blockquote>
+      			<p>
+      				"Tengo que aprobar porque el otro Pablo me putea con el git"
+      			</p>
+      			<small>
+      				<b>Pablo Varela Gandía</b> hace 4 horas.
+      			</small>
+      		</blockquote>
+      	</div>
+      </div>
+	</div>
+	<div class="panel-footer">
+		<div class="container">
+			<p class="text-muted">Creado por Pablo Varela Gandía y Pablo Verdú Romero</p>
+			<h6 class="text-muted">Desarrollo de aplicaciones en internet - 2013 - Universidad de Alicante</h6>
 		</div>
 	</div>
-
 </body>
+
 </html>
