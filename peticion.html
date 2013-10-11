@@ -5,57 +5,89 @@
 <head>
     <title>{{peticion.titulo}}</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/muevete/stylesheet/bootstrap.css" media="screen" />
 </head>
 
 <body>
-	<h1>Muevete.org</h1>
-	<h2>{{peticion.titulo}}</h2>
 
-	<div id="imagen" align="center">
-		<img src="img/peticiones/{{peticion.id}}.jpg">
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="/muevete/index" class="navbar-brand">Muevete.org</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#">Login</a></li>
+				<li><a href="#">Registrarse</a></li>
+            </ul>
+		</div>
 	</div>
 
-	<div id="descripcion">
-		{{{peticion.texto}}}
-	</div>
+	<div class="container">
+		<div class="page-header" id="banner">
+        <div class="row">
+          <div class="col-lg-8">
+            <h1>Muevete.org</h1>
+            <p class="lead">{{peticion.titulo}}</p>
+          </div>
+        </div>
+      </div>
 
-	<div id="creador" align="right">
-		<p><b>Impulsada por:</b> <a href="/muevete/usuario?login={{peticion.creador.login}}">{{peticion.creador.nombre}} {{peticion.creador.apellidos}}</a></p>
-		<a href="/muevete/usuario?login={{peticion.creador.login}}"> <img src="img/perfiles/{{peticion.creador.login}}.jpg"> </a>
-	</div>
+      <div class="row">
+      	<div id="descripcion" class="col-lg-8">
+      		{{{peticion.texto}}}
+      	</div>
+      	<div id="imagen" >
+      		<img class="col-lg-4" src="img/peticiones/{{peticion.id}}.jpg">
+      	</div>
+      </div>
 
-	<div id="firmas">
-		<span>Llevamos: <b>{{peticion.firmasConseguidas}}</b> firmas, pero tenemos que llegar a {{peticion.firmasObjetivo}}</span>
-		<form id="firmarPeticion">
-			<h2>Firma la peticion</h2>
-			<p>Nombre: <input type="text" name="nombre"></p>
-			<p>Apellidos: <input type="text" name="apellidos"></p>
-			<p>Email: <input type="text" name="email"></p>
-			<p>
-				Comentario:
-				<textarea rows="5" columns="5"></textarea>
-			</p>
-			<p>
-				<input type="checkbox"> Acepto que mi firma se muestre publicamente 
-				<input type="button" value="Firmar"></input>
-			</p>
-		</form> 
-	</div>
+      <div class="row" style="margin-top: 2em">
+      	<div id="creador" class="col-lg-4">
+	  		<a href="/muevete/usuario?login={{peticion.creador.login}}"> <img class="col-lg-3" src="img/perfiles/{{peticion.creador.login}}.jpg"> </a>
+	  		<span><b>Petición impulsada por:</b></span>
+	  		<p><a href="/muevete/usuario?login={{peticion.creador.login}}">{{peticion.creador.nombre}} {{peticion.creador.apellidos}}</a></p>
+        </div>
+        <div class="col-lg-4"></div>
+        <div id="firmasConseguidas" class="col-lg-4">
+        	<p>Firmas conseguidas: <b><span class="text-primary">{{peticion.firmasConseguidas}}</span></b></p>
+        	<p>Objetivo: <b><span class="text-danger">{{peticion.firmasObjetivo}}<span></b></p>
+        </div>
+      </div>
 
-	<div id="actualizaciones">
-		<div id="actualizacion">
-			<h2>Actualizaciones a la petición</h2>
-			<span>10/10/2013</span> <span>Hemos alcanzado 5 firmas.</span>
-			<div id="imagenActualizacion"> Imagen </div>
+		
+
+		<div id="firmas">
+			<form id="firmarPeticion">
+				<h2>Firma la peticion</h2>
+				<p>Nombre: <input type="text" name="nombre"></p>
+				<p>Apellidos: <input type="text" name="apellidos"></p>
+				<p>Email: <input type="text" name="email"></p>
+				<p>
+					Comentario:
+					<textarea rows="5" columns="5"></textarea>
+				</p>
+				<p>
+					<input type="checkbox"> Acepto que mi firma se muestre publicamente 
+					<input type="button" value="Firmar"></input>
+				</p>
+			</form> 
 		</div>
 
-	</div>
+		<div id="actualizaciones">
+			<div id="actualizacion">
+				<h2>Actualizaciones a la petición</h2>
+				<span>10/10/2013</span> <span>Hemos alcanzado 5 firmas.</span>
+				<div id="imagenActualizacion"> Imagen </div>
+			</div>
 
-	<div id="firmasRecientes">
-		<h2>Firmas recientes</h2>
-		<div id="firmaReciente">
-			<span><b>Pablo Verdú Romero</b></span> <span>firmó la peticion hace 2 minutos.</span>
-			<div id="Motivos"><i>"Firmo esta peticion porque me lo estoy currando"</i></div>
+		</div>
+
+		<div id="firmasRecientes">
+			<h2>Firmas recientes</h2>
+			<div id="firmaReciente">
+				<span><b>Pablo Verdú Romero</b></span> <span>firmó la peticion hace 2 minutos.</span>
+				<div id="Motivos"><i>"Firmo esta peticion porque me lo estoy currando"</i></div>
+			</div>
 		</div>
 	</div>
 
