@@ -50,6 +50,14 @@ html {
 
 body {
   margin: 0;
+
+  background-color: #FFFFFF;
+  font-family: "Trebuchet MS", Tahoma, Verdana;
+  font-size: 12px;
+  font-weight: normal;
+  color: #666666;
+  margin: 10px;
+  padding: 0;
 }
 
 a:focus {
@@ -7377,4 +7385,33 @@ td.visible-print {
 
 .affix {
   position: fixed;
+}
+
+.fadebox {
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index:1001;
+  -moz-opacity: 0.8;
+  opacity:.80;
+  filter: alpha(opacity=80);
+}
+.overbox {
+  display: none;
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  z-index:1002;
+  overflow: auto;
+}
+#content {
+  background: #FFFFFF;
+  border: solid 3px #CCCCCC;
+  padding: 10px;
 }
