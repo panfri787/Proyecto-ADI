@@ -5,25 +5,73 @@
 <head>
     <title>{{Muevete.org}}</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/muevete/stylesheet/bootstrap.css" media="screen" />
 </head>
 
 <body>
-    <h1>{{usuario.email}}</h1>
-    <div id="perfil" align="right">
-        <div>
-            <img width="200" src="img/perfiles/{{usuario.login}}.jpg">
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="/muevete/index" class="navbar-brand">Muevete.org</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Registrarse</a></li>
+            </ul>
         </div>
-        <div>
-            {{usuario.nombre}}
-            {{usuario.apellidos}}
-        </div>
-    </div>
-    <div id="accion" align="left">
-        <p>Creó la peticion: STOP CARNICAS</p>
-        <p>Fecha: 25 de Diciembre</p>
-        <p>Imagen:</p>
     </div>
 
+    <div class="container">
+        <div class="page-header" id="banner">
+            <div class="page-header" id="banner">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>{{usuario.nombre}} {{usuario.apellidos}}</h1>
+                    </div>
+                </div>
+            </div>
+        </dic>
+        <div class="row">
+            <div id="fotoPerfil" class="col-lg-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img width="200" src="img/perfiles/{{usuario.login}}.jpg">
+                    </div>
+                </div>
+            </div>
+            <div id="imagen" class="col-lg-9" >
+                <div class="well well-lg">
+                    <div class="panel-body">
+                        <p>{{usuario.nombre}}</p>
+                        <p>{{usuario.apellidos}}</p>
+                        <p>Email: {{usuario.email}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="acciones" class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-tittle"> Acciones recientes</h1>
+            </div>
+            <div class="panel-body">
+                <p>Creó la petición: STOP CARNICAS</p>
+                <p>Fecha: 25 de Diciembre</p>
+                <p>Imagen:</p>
+                <p>-----------------</p>
+                <p> Firmó la petición: Salvar a Scooby Doo </p>
+                <p> Fecha: hace 3 horas </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="panel-footer">
+        <div class="container">
+            <p class="text-muted">Creado por Pablo Varela Gandía y Pablo Verdú Romero</p>
+            <h6 class="text-muted">Desarrollo de aplicaciones en internet - 2013 - Universidad de Alicante</h6>
+        </div>
     </div>
 </body>
+
 </html>
