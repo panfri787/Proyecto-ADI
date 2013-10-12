@@ -3,18 +3,73 @@
 <html>
 
 	<head>
-		<title></title>
+		<title>Muevete.org</title>
 		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="/muevete/stylesheet/bootstrap.css" media="screen" />
 	</head>
 
 	<body>
-		<h1>Muevete.org</h1>
-		<h2>Cambia el mundo</h2>
-		{{#destacadas}}
-			<img width="200" src="img/peticiones/{{id}}.jpg">
-			{{titulo}} 
-			<a href="/muevete/peticion?id={{id}}">Ver peticion</a> <br>
-            {{firmasConseguidas}}
-		{{/destacadas}}
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a href="/muevete/index" class="navbar-brand">Muevete.org</a>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="javascript:showLightbox();">Login</a></li>
+					<li><a href="#">Registrarse</a></li>
+	            </ul>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="page-header" id="banner">
+		        <div class="row">
+					<div class="col-lg-12">
+						<h1>Peticiones destacadas</h1>
+					</div>
+	        	</div>
+      		</div>
+
+	      	<div class="row">
+	      		{{#destacadas}}
+	      		<div class="col-lg-12">
+					<div class="jumbotron">
+						<!--<img width="200" src="img/peticiones/{{id}}.jpg">-->
+						<h1><strong>{{titulo}}</strong></h1>
+	
+						<ul class="nav nav-pills">
+							<li class="col-lg-10">
+								<p>Firmas conseguidas
+			            			<span class="badge">{{firmasConseguidas}}</span>
+			            		</p>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-lg" href="/muevete/peticion?id={{id}}">Ver peticion</a>
+							</li>	
+						</ul>        
+			        </div>
+			    </div>
+			{{/destacadas}}
+	      	</div>
+	    </div>
+
 	</body>
+	<div class="panel-footer">
+		<div class="container">
+			<p class="text-muted">Creado por Pablo Varela Gandía y Pablo Verdú Romero</p>
+			<h6 class="text-muted">Desarrollo de aplicaciones en internet - 2013 - Universidad de Alicante</h6>
+		</div>
+	</div>
+	<div id="over" style="display:none;" class="overbox">Contenido Lightbox</div>
+		<div id="fade" class="fadebox">&nbsp;</div>
+	<script>
+	    function showLightbox() {
+	        document.getElementById('over').style.display='block';
+	        document.getElementById('fade').style.display='block';
+	    }
+	    function hideLightbox() {
+	        document.getElementById('over').style.display='none';
+	        document.getElementById('fade').style.display='none';
+	    }
+    </script>
 </html>
