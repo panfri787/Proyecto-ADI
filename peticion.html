@@ -16,8 +16,8 @@
 				<a href="/muevete/index" class="navbar-brand">Muevete.org</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">Login</a></li>
-				<li><a href="#">Registrarse</a></li>
+				<li><a href="javascript:showLoginLightbox();">Login</a></li>
+				<li><a href="javascript:showLightbox();">Registrarse</a></li>
             </ul>
 		</div>
 	</div>
@@ -172,9 +172,112 @@
 	<div class="panel-footer">
 		<div class="container">
 			<p class="text-muted">Creado por Pablo Varela Gandía y Pablo Verdú Romero</p>
-			<h6 class="text-muted">Aplicaciones distribuidas en internet - 2013 - Universidad de Alicante</h6>
+			<h6 class="text-muted">Aplicaciones Distribuidas en Internet - 2013 - Universidad de Alicante</h6>
 		</div>
 	</div>
+
+  <div id="overLogin" class="overbox">
+      <div id="content">
+        <form class="form-horizontal">
+            <fieldset>
+              <legend>
+                Login
+              </legend>
+              <div class="form-group">
+                        <label for="inputLogin" class="col-lg-3 control-label">Login</label>
+                        <div class="col-lg-5">
+                          <input type="text" class="form-control" id="inputLogin" placeholder="Login">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-lg-3 control-label">Password</label>
+                        <div class="col-lg-5">
+                          <input type="password" class="form-control" id="inputPassword" placeholder="Passwords">
+                        </div>
+                    </div>
+                    <br>
+                  <div class="form-group">
+                    <div class="col-lg-9 col-lg-offset-3">
+                      <input type="submit" class="btn btn-primary"></input> 
+                    </div>
+                  </div>
+                  <br>
+            </fieldset>
+          </form>
+        <a href="javascript:hideLoginLightbox();">Cerrar LightBox</a>
+      </div>
+    </div>
+    <div id="fadeLogin" class="fadebox">&nbsp;</div>
+
+  <div id="over" class="overbox">
+      <div id="content">
+        <form class="form-horizontal">
+            <fieldset>
+              <legend>
+                Registrarse
+              </legend>
+              <div class="form-group">
+                        <label for="inputNombre" class="col-lg-3 control-label">Nombre</label>
+                        <div class="col-lg-5">
+                          <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputApellidos" class="col-lg-3 control-label">Apellidos</label>
+                        <div class="col-lg-5">
+                          <input type="text" class="form-control" id="inputApellidos" placeholder="Apellidos">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-lg-3 control-label">Email</label>
+                        <div class="col-lg-5">
+                          <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputDate" class="col-lg-3 control-label">Fecha de nacimiento</label>
+                        <div class="col-lg-5">
+                          <input type="text" class="form-control" id="inputDate" placeholder="Fecha de Naciemiento">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-lg-5 col-lg-offset-3">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox">  Acepto las condiciones.
+                          </label>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-9 col-lg-offset-3">
+                      <input type="submit" class="btn btn-primary"></input> 
+                    </div>
+                  </div>
+            </fieldset>
+          </form>
+        <a href="javascript:hideLightbox();">Cerrar LightBox</a>
+      </div>
+    </div>
+    <div id="fade" class="fadebox">&nbsp;</div>
 </body>
 
+<script type="text/javascript">
+      function showLightbox() {
+          document.getElementById('over').style.display='block';
+          document.getElementById('fade').style.display='block';
+      }
+      function hideLightbox() {
+          document.getElementById('over').style.display='none';
+          document.getElementById('fade').style.display='none';
+      }
+      function showLoginLightbox() {
+        document.getElementById('overLogin').style.display='block';
+        document.getElementById('fadeLogin').style.display='block';
+      }
+      function hideLoginLightbox() {
+        document.getElementById('overLogin').style.display='none';
+        document.getElementById('fadeLogin').style.display='none';
+      }
+    </script>
 </html>
