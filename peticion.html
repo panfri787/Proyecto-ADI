@@ -109,16 +109,23 @@
         		</a>
         	</div>
         </div>
-      	<div class="col-lg-1">
+      	<!--<div class="col-lg-1">
 			<a href="/muevete/usuario?login={{peticion.creador.login}}"> <img width="70" src="img/perfiles/{{peticion.creador.login}}.jpg"> </a>
-      	</div>
-      	<div id="creador" class="col-lg-3">
+      	</div>-->
+      	<div id="creador" class="col-lg-4">
 	  		<div class="panel panel-primary">
 	  			<div class="panel-heading">
 	  				<b>Petición impulsada por:</b>
 	  			</div>
 	  			<div class="panel-body">
-	  				<p><a href="/muevete/usuario?login={{peticion.creador.login}}">{{peticion.creador.nombre}} {{peticion.creador.apellidos}}</a></p>
+	  				<p>
+              <span class="col-lg-9">
+                <a href="/muevete/usuario?login={{peticion.creador.login}}">{{peticion.creador.nombre}} {{peticion.creador.apellidos}}</a>
+              </span>
+              <span class="col-lg-1">
+                <a href="/muevete/usuario?login={{peticion.creador.login}}"> <img width="70" src="img/perfiles/{{peticion.creador.login}}.jpg"> </a>
+              </span>
+            </p>
 	  			</div>
 	  		</div>
         </div>
@@ -145,7 +152,7 @@
       		<h2 class="text-primary">Firmas recientes</h2>
       		<blockquote>
       			<p>
-      				"Judear es mi camino, Judas es mi pastor. Amén"
+      				"Soy el God, voy a poner una casilla en la declaracion de la renta para subvencionarme"
       			</p>
       			<small>
       				<b>Pablo Verdú Romero</b> hace 2 minutos.
