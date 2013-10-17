@@ -7415,3 +7415,22 @@ td.visible-print {
   border: solid 3px #CCCCCC;
   padding: 10px;
 }
+
+.overboxlogin {
+  display: none;
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  z-index:1002;
+}
+
+.overboxregistro {
+  display: none;
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  width: 60%;
+  z-index:1002;
+}
