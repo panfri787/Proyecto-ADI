@@ -7410,7 +7410,8 @@ td.visible-print {
   z-index:1002;
   overflow: auto;
 }
-#content {
+
+.contentLightbox {
   background: #FFFFFF;
   border: solid 3px #CCCCCC;
   padding: 10px;

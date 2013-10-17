@@ -177,7 +177,7 @@
 	</div>
 
   <div id="overLogin" class="overboxlogin">
-      <div id="content">
+      <div class="contentLightbox">
         <form class="form-horizontal">
             <fieldset>
               <legend>
@@ -199,7 +199,7 @@
                   
                   <div class="form-group">
                     <div class="col-lg-9 col-lg-offset-3">
-                      <input type="submit" class="btn btn-primary"></input> 
+                      <input type="submit" class="btn btn-primary"> 
                     </div>
                   </div>
                   <div class="form-group"></div>
@@ -212,7 +212,7 @@
     <div id="fadeLogin" class="fadebox">&nbsp;</div>
 
   <div id="over" class="overboxregistro">
-      <div id="content">
+      <div class="contentLightbox">
         <form class="form-horizontal">
             <fieldset>
               <legend>
@@ -221,19 +221,19 @@
               <div class="form-group">
                         <label for="inputNombre" class="col-lg-3 control-label">Nombre</label>
                         <div class="col-lg-5">
-                          <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
+                          <input type="text" class="form-control" id="inputNombreRegistro" placeholder="Nombre">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputApellidos" class="col-lg-3 control-label">Apellidos</label>
                         <div class="col-lg-5">
-                          <input type="text" class="form-control" id="inputApellidos" placeholder="Apellidos">
+                          <input type="text" class="form-control" id="inputApellidosRegistro" placeholder="Apellidos">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail" class="col-lg-3 control-label">Email</label>
                         <div class="col-lg-5">
-                          <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                          <input type="text" class="form-control" id="inputEmailRegistro" placeholder="Email">
                         </div>
                     </div>
                     <div class="form-group">
@@ -253,7 +253,7 @@
                   </div>
                   <div class="form-group">
                     <div class="col-lg-9 col-lg-offset-3">
-                      <input type="submit" class="btn btn-primary"></input> 
+                      <input type="submit" class="btn btn-primary"> 
                     </div>
                   </div>
             </fieldset>
@@ -262,9 +262,8 @@
       </div>
     </div>
     <div id="fade" class="fadebox">&nbsp;</div>
-</body>
 
-<script type="text/javascript">
+    <script type="text/javascript">
       function showLightbox() {
           document.getElementById('over').style.display='block';
           document.getElementById('fade').style.display='block';
@@ -282,4 +281,8 @@
         document.getElementById('fadeLogin').style.display='none';
       }
     </script>
+
+
+</body>
+
 </html>
