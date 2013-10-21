@@ -1,0 +1,57 @@
+Funcionalidades usadas del framework.
+
+
+<head>
+	Función navbar que hemos utilizado para hacer la barra principal
+	de nuestra aplicación y poner el nombre y también añadir los
+	enlaces para los lightbox:
+	- navbar-default
+	- navbar-fixed-top
+	- navbar-nav
+	- navbar-right
+	- navbar-header
+	- navbar-brand
+</head>
+
+<body>
+	Para colocar como principal el titulo de nuestra petición y nombre
+	- page-header
+	Declarar las filas para posicionar los elementos como imagen, peticion...
+	- row
+	Utilizado en el index para mostrar las peticiones que da efecto de estar más resaltado
+	- jumbotron
+	Crea un "badge" con el contenido que le hayamos indicado
+	- badge
+
+	Función progress bar que hemos puesto para el numero de firmas alcanzadas:
+	- progress-striped activate
+	- progress-bar
+
+	Función btn para todos los botones que hemos insertado y además decirle la posición:
+	- btn-primary
+	- btn-lg
+
+	Función panel-footer para colocar al final de nuestras paginas y añadir el contenido de 
+	los componentes e información de la asignatura:
+	- container
+	- text-muted
+
+	Función list-group-item que hemos utiliado para el listado de actualizaciones o de peticiones 
+	creadas y con además añadidas dentro de las etiquetas estas clases también:
+	- heading
+	- text
+		- text-primary
+		- text-danger
+
+	Función form cuando creamos los lightbox y para firma la petición:
+	- form-horizontal
+	- form-group
+	- form-control
+	- help-block
+	- control-label
+
+	Y lo más utilizado han sido las propiedades añadidas de las columnas para asignar el tamaño para ir posicionando las clases correctamente ya que estas
+	venian predefinidas ya con un ancho.
+	- col-lg-[tamaño]
+		[tamaño] = {2,3,4,5,6,8,9,10,12,offset-3}
+</body>
