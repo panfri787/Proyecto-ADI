@@ -107,33 +107,39 @@
 	  					<legend>
 	  						Registrarse
 	  					</legend>
-	  					<div class="form-group">
+	  					<div id="divNombre" class="form-group">
 		                    <label for="inputNombre" class="col-lg-3 control-label">Nombre</label>
 		                    <div class="col-lg-5">
 		                      <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
 		                    </div>
 		                </div>
-		                <div class="form-group">
+		                <div id="divApellidos" class="form-group">
 		                    <label for="inputApellidos" class="col-lg-3 control-label">Apellidos</label>
 		                    <div class="col-lg-5">
 		                      <input type="text" class="form-control" id="inputApellidos" placeholder="Apellidos">
 		                    </div>
 		                </div>
-		                <div class="form-group">
+		                <div id="divEmail" class="form-group">
 		                    <label for="inputEmail" class="col-lg-3 control-label">Email</label>
 		                    <div class="col-lg-5">
 		                      <input type="text" class="form-control" id="inputEmail" placeholder="Email">
 		                    </div>
 		                </div>
-		                <div class="form-group">
-		                    <label for="inputDate" class="col-lg-3 control-label">Fecha de nacimiento</label>
+		                <div id="divPassword2" class="form-group">
+		                    <label for="inputPassword" class="col-lg-3 control-label">Password</label>
 		                    <div class="col-lg-5">
-		                      <input type="text" class="form-control" id="inputDate" placeholder="Fecha de Naciemiento">
+		                      <input type="password" class="form-control"  id="inputPassword" placeholder="Password">
+		                    </div>
+		                </div>
+		                <div id="divRePassword2" class="form-group">
+		                    <label for="inputRepeatPassword" class="col-lg-3 control-label">Repite Password</label>
+		                    <div class="col-lg-5">
+		                      <input type="password" class="form-control"  id="inputRepeatPassword" placeholder="Repite Password">
 		                    </div>
 		                </div>
 			            <div class="form-group">
 			            	<div class="col-lg-9 col-lg-offset-3">
-			            		<input type="submit" class="btn btn-primary">
+			            		<input id="Enviar" type="button" value="Enviar" class="btn btn-primary">
 			            	</div>
 			            </div>
 	  				</fieldset>
@@ -159,6 +165,24 @@
 	    function hideLoginLightbox() {
 	    	document.getElementById('overLogin').style.display='none';
 	    	document.getElementById('fadeLogin').style.display='none';
+	    }
+	    
+	    document.getElementById("Enviar").onclick = function() {
+	    	if(document.getElementById("inputNombre").value == "") {
+	    		document.getElementById("divNombre").className += " has-warning";
+	    	}
+	    	if(document.getElementById("inputApellidos").value == "") {
+	    		document.getElementById("divApellidos").className += " has-warning";
+	    	}
+	    	if(document.getElementById("inputEmail").value == "") {
+	    		document.getElementById("divEmail").className += " has-warning";
+	    	}
+	    	if(document.getElementById("inputPassword").value == "") {
+	    		document.getElementById("divPassword").className += " has-warning";
+	    	}
+	    	if(document.getElementById("inputRepeatPassword").value == "") {
+	    		document.getElementById("divRePassword").className += " has-warning";
+	    	}
 	    }
     </script>
 
