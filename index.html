@@ -73,13 +73,13 @@
 	  					<legend>
 	  						Login
 	  					</legend>
-	  					<div class="form-group">
+	  					<div class="form-group" id="divLogin1">
 		                    <label for="inputLogin" class="col-lg-3 control-label">Login</label>
 		                    <div class="col-lg-5">
 		                      <input type="text" class="form-control" id="inputLogin" placeholder="Login">
 		                    </div>
 		                </div>
-		                <div class="form-group">
+		                <div class="form-group" id="divPassword1">
 		                    <label for="inputPassword" class="col-lg-3 control-label">Password</label>
 		                    <div class="col-lg-5">
 		                      <input type="password" class="form-control" id="inputPassword" placeholder="Passwords">
@@ -88,7 +88,7 @@
 		                <div class="form-group"></div>
 			            <div class="form-group">
 			            	<div class="col-lg-9 col-lg-offset-3">
-			            		<input type="submit" class="btn btn-primary"> 
+			            		<input type="button" class="btn btn-primary" value="Enviar" id="botonLogin"> 
 			            	</div>
 			            </div>
 			            <div class="form-group"></div>
@@ -128,7 +128,7 @@
 		                <div id="divPassword2" class="form-group">
 		                    <label for="inputPassword" class="col-lg-3 control-label">Password</label>
 		                    <div class="col-lg-5">
-		                      <input type="password" class="form-control"  id="inputPassword" placeholder="Password">
+		                      <input type="password" class="form-control"  id="inputPassword2" placeholder="Password">
 		                    </div>
 		                </div>
 		                <div id="divRePassword2" class="form-group">
@@ -166,7 +166,7 @@
 	    	document.getElementById('overLogin').style.display='none';
 	    	document.getElementById('fadeLogin').style.display='none';
 	    }
-	    
+	    /*
 	    document.getElementById("Enviar").onclick = function() {
 	    	if(document.getElementById("inputNombre").value == "") {
 	    		document.getElementById("divNombre").className += " has-warning";
@@ -183,7 +183,94 @@
 	    	if(document.getElementById("inputRepeatPassword").value == "") {
 	    		document.getElementById("divRePassword").className += " has-warning";
 	    	}
+	    }*/
+
+	    document.getElementById("botonLogin").onclick=function(){
+	    	/*document.getElementById("divLogin").className = "form-group"
+	    	document.getElementById("divPassword").className = "form-group"
+	    	if(document.getElementById("inputLogin").value != "" && 
+	    		document.getElementById("inputPassword").value != ""){
+	    		//TODO: Login
+
+	    	}else{
+	    		if(document.getElementById("inputLogin").value == ""){
+	    			document.getElementById("divLogin").className+=" has-error";
+	    		}
+	    		if(document.getElementById("inputPassword").value == ""){
+	    			document.getElementById("divPassword").className += " has-error"
+	    		}
+	    	}*/
 	    }
+
+	    document.getElementById("inputLogin").onblur = function () {
+	    	if(document.getElementById("inputLogin").value == ""){
+	    		document.getElementById("divLogin").className += " has-error"
+	    	} else {
+	    		document.getElementById("divLogin").className = "form-group"
+	    	}
+	    }
+
+	    document.getElementById("inputPassword").onblur = function () {
+	    	if(document.getElementById("inputPassword").value == ""){
+	    		document.getElementById("divPassword").className += " has-error"
+	    	} else {
+	    		document.getElementById("divPassword").className = "form-group"
+	    	}
+	    }
+
+	    document.getElementById("inputPassword").onfocus = function () {
+	    	if(document.getElementById("inputLogin").value == "") {
+	    		document.getElementById("divLogin").className += " has-warning"
+	    	} else {
+	    		document.getElementById("divLogin").className = "form-group"
+	    	}
+	    }
+
+	    document.getElementById("inputApellidos").onfocus = function() {
+	    	if(document.getElementById("inputNombre").value == "") {
+	    		document.getElementById("divNombre").className += " has-warning"
+	    	}
+	    	else {
+	    		document.getElementById("divNombre").className = "form-group"
+	    	}
+	    }
+
+	    document.getElementById("inputEmail").onfocus = function() {
+	    	if(document.getElementById("inputApellidos").value == "") {
+	    		document.getElementById("divApellidos").className += " has-warning"
+	    	}
+	    	else {
+	    		document.getElementById("divApellidos").className = "form-group"
+	    	}
+	    }
+
+	    document.getElementById("inputPassword2").onfocus = function() {
+	    	if(document.getElementById("inputEmail").value == "") {
+	    		document.getElementById("divEmail").className += " has-warning"
+	    	}
+	    	else {
+	    		document.getElementById("divEmail").className = "form-group"
+	    	}
+	    }
+
+	    document.getElementById("inputPassword2").onfocus = function() {
+	    	if(document.getElementById("inputEmail").value == "") {
+	    		document.getElementById("divEmail").className += " has-warning"
+	    	}
+	    	else {
+	    		document.getElementById("divEmail").className = "form-group"
+	    	}
+	    }
+
+	    document.getElementById("inputRepeatPassword").onfocus = function() {
+	    	if(document.getElementById("inputPassword2").value == "") {
+	    		document.getElementById("divPassword2").className += " has-warning"
+	    	}
+	    	else {
+	    		document.getElementById("divPassword2").className = "form-group"
+	    	}
+	    }
+
     </script>
 
 
