@@ -15,7 +15,7 @@
 				<div class="navbar-header">
 					<a href="/muevete/index" class="navbar-brand">Muevete.org</a>
 				</div>
-				<ul class="nav navbar-nav navbar-right">
+				<ul id="listaCabecera" class="nav navbar-nav navbar-right">
 					<li><a href="javascript:showLoginLightbox()">Login</a></li>
 					<li><a href="javascript:showLightbox();">Registrarse</a></li>
 	            </ul>
@@ -97,9 +97,21 @@
 	  			</form>
 				<a href="javascript:hideLoginLightbox();">Cerrar LightBox</a>
 			</div>
+			<div id="alertaLogin400" class="alertLogin">
+				<div class="alert alert-dismissable alert-danger">
+					<button id="closeAlertaLogin" type="button" class="close">×</button>
+					<b>Error 400:</b> Hay campos obligatorios vacios.
+				</div>
+			</div>
+
+			<div id="alertaLogin403" class="alertLogin">
+				<div class="alert alert-dismissable alert-danger">
+					<button id="closeAlerta403" type="button" class="close">×</button>
+					<b>Error 403:</b> No existe un usuario registrado con esos datos.
+				</div>
+			</div>
 		</div>
 		<div id="fadeLogin" class="fadebox">&nbsp;</div>
-		
 		<div id="over" class="overboxregistro">
 			<div class="contentLightbox">
 				<form class="form-horizontal">
@@ -149,7 +161,48 @@
 		</div>
 	<div id="fade" class="fadebox">&nbsp;</div>
 
+	<div id="alertLogin200" class="alertLogin">
+		<div class="alert alert-dismissable alert-success">
+			<button id="closeAlert200" type="button" class="close">×</button>
+			Login realizado correctamente.
+		</div>
+	</div>
+
 	<script type="text/javascript">
+
+		//TODO: Mostrar nombre en la cabecera
+
+		/*window.onload = function(){
+			if(localStorage.login == undefined){
+				document.getElementById('listaCabecera').innerHTML=
+				'<li><a href="javascript:showLoginLightbox()">Login</a></li>
+				<li><a href="javascript:showLightbox();">Registrarse</a></li>'
+			} else {
+				/*document.getElementById('listaCabecera').innerHTML=
+				'<li>Bienvenido <a href="usuario?login='+localStorage.login+'">'+
+				nombreUserReq(localStorage.login)+'</li>
+				<li><a href="javascript:logout()">Logout</a></li>'
+
+			}
+		}
+
+		var nombreUserReq = function(login) {
+			req = new XMLHttpRequest();
+			req.open('GET', 'api/usuarios/'+login, true)
+			req.onreadystatechange = callbackNombreUserReq
+			req.send(null)
+		}
+
+		var callbackNombreUserReq = function(){
+			var nombre;
+			if(req.readyState == 4){
+				/*var usuario = JSON.parse(req.responseText)
+				nombre = usuario.nombre + " " usuario.apellidos
+			}
+
+			return nombre
+		}*/
+
 	    function showLightbox() {
 	        document.getElementById('over').style.display='block';
 	        document.getElementById('fade').style.display='block';
@@ -191,22 +244,58 @@
 	    	}
 	    }*/
 
-	    document.getElementById("botonLogin").onclick=function(){
-	    	/*document.getElementById("divLogin").className = "form-group"
-	    	document.getElementById("divPassword").className = "form-group"
-	    	if(document.getElementById("inputLogin").value != "" && 
-	    		document.getElementById("inputPassword").value != ""){
-	    		//TODO: Login
-
-	    	}else{
-	    		if(document.getElementById("inputLogin").value == ""){
-	    			document.getElementById("divLogin").className+=" has-error";
-	    		}
-	    		if(document.getElementById("inputPassword").value == ""){
-	    			document.getElementById("divPassword").className += " has-error"
-	    		}
-	    	}*/
+	    /*Mensajes de alerta para el login*/
+	    var showAlert200 = function(){
+	    	document.getElementById('alertLogin200').style.display='block'
+	    	document.getElementById('closeAlert200').onclick = function () {
+	    		document.getElementById('alertLogin200').style.display='none'
+	    	}
 	    }
+
+	    var showAlert400 = function(){
+	    	document.getElementById('alertaLogin400').style.display="block"
+	    	document.getElementById('closeAlertaLogin').onclick = function () {
+	    		document.getElementById('alertaLogin400').style.display='none'
+	    	}
+	    }
+
+	    var showAlert403 = function(){
+	    	document.getElementById('alertaLogin403').style.display="block"
+	    	document.getElementById('closeAlerta403').onclick = function () {
+	    		document.getElementById('alertaLogin403').style.display='none'
+	    	}
+	    }
+
+	    /*Logica del login*/
+	    var callbackLogin = function(){
+	    	if (req.readyState == 4){
+	    		switch(req.status){
+	    			case 200:
+	    				localStorage.login = document.getElementById('inputLogin').value;
+	    				hideLoginLightbox();
+	    				showAlert200();
+	    				break;
+	    			case 400:
+	    				showAlert400();
+	    				break;
+	    			case 403:
+	    				showAlert403();
+	    				break;
+	    		}
+	    	}
+	    }
+
+	    document.getElementById("botonLogin").onclick=function(){
+	    	req = new XMLHttpRequest();
+	    	var id = document.getElementById('inputLogin').value;
+	    	var pass = document.getElementById('inputPassword').value;
+	    	req.open('POST', 'login', true);
+	    	req.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
+	    	req.onreadystatechange = callbackLogin;
+	    	req.send('login='+id+'&password='+pass);
+	    }
+
+
 
 	    /*Controles del lightbox login*/
 	    document.getElementById("inputLogin").onblur = function () {

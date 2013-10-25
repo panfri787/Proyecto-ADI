@@ -7435,3 +7435,12 @@ td.visible-print {
   width: 60%;
   z-index:1002;
 }
+
+.alertLogin {
+  display: none;
+  position: fixed;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  z-index: 1002;
+}
