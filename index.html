@@ -159,8 +159,14 @@
 	        document.getElementById('fade').style.display='none';
 	    }
 	    function showLoginLightbox() {
+	    	//Visualiza lightbox.
 	    	document.getElementById('overLogin').style.display='block';
 	    	document.getElementById('fadeLogin').style.display='block';
+	    	//Vacia campos anteriores y normaliza clases.
+	    	document.getElementById('inputLogin').value = '';
+	    	document.getElementById('inputPassword').value = '';
+	    	document.getElementById('divLogin1').className = 'form-group';
+	    	document.getElementById('divPassword1').className = 'form-group';
 	    }
 	    function hideLoginLightbox() {
 	    	document.getElementById('overLogin').style.display='none';
@@ -202,30 +208,32 @@
 	    	}*/
 	    }
 
+	    /*Controles del lightbox login*/
 	    document.getElementById("inputLogin").onblur = function () {
 	    	if(document.getElementById("inputLogin").value == ""){
-	    		document.getElementById("divLogin").className += " has-error"
+	    		document.getElementById("divLogin1").className += " has-warning"
 	    	} else {
-	    		document.getElementById("divLogin").className = "form-group"
+	    		document.getElementById("divLogin1").className = "form-group"
 	    	}
 	    }
 
 	    document.getElementById("inputPassword").onblur = function () {
 	    	if(document.getElementById("inputPassword").value == ""){
-	    		document.getElementById("divPassword").className += " has-error"
+	    		document.getElementById("divPassword1").className += " has-warning"
 	    	} else {
-	    		document.getElementById("divPassword").className = "form-group"
+	    		document.getElementById("divPassword1").className = "form-group"
 	    	}
 	    }
 
 	    document.getElementById("inputPassword").onfocus = function () {
 	    	if(document.getElementById("inputLogin").value == "") {
-	    		document.getElementById("divLogin").className += " has-warning"
+	    		document.getElementById("divLogin1").className += " has-warning"
 	    	} else {
-	    		document.getElementById("divLogin").className = "form-group"
+	    		document.getElementById("divLogin1").className = "form-group"
 	    	}
 	    }
 
+	    /*Controles del lightbox registro*/
 	    document.getElementById("inputApellidos").onfocus = function() {
 	    	if(document.getElementById("inputNombre").value == "") {
 	    		document.getElementById("divNombre").className += " has-warning"
