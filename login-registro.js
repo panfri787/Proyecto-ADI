@@ -1,35 +1,35 @@
 		//TODO: Mostrar nombre en la cabecera
 
-		/*window.onload = function(){
-			if(localStorage.login == undefined){
-				document.getElementById('listaCabecera').innerHTML=
-				'<li><a href="javascript:showLoginLightbox()">Login</a></li>
-				<li><a href="javascript:showLightbox();">Registrarse</a></li>'
-			} else {
-				/*document.getElementById('listaCabecera').innerHTML=
-				'<li>Bienvenido <a href="usuario?login='+localStorage.login+'">'+
-				nombreUserReq(localStorage.login)+'</li>
-				<li><a href="javascript:logout()">Logout</a></li>'
 
-			}
-		}
 
 		var nombreUserReq = function(login) {
 			req = new XMLHttpRequest();
-			req.open('GET', 'api/usuarios/'+login, true)
-			req.onreadystatechange = callbackNombreUserReq
-			req.send(null)
+			req.open('GET', 'api/usuarios/'+login, false)
+			req.send()
+			
+			var usuario = JSON.parse(req.responseText)
+			return usuario.nombre;
 		}
 
-		var callbackNombreUserReq = function(){
-			var nombre;
-			if(req.readyState == 4){
-				/*var usuario = JSON.parse(req.responseText)
-				nombre = usuario.nombre + " " usuario.apellidos
-			}
+		window.onload = function(){
+			if(localStorage.login === undefined){
+				document.getElementById('listaCabecera').innerHTML=
+				'<li><a href="javascript:showLoginLightbox()">Login</a></li>'+
+				'<li><a href="javascript:showLightbox();">Registrarse</a></li>'
+			} else {
+				var nombre = nombreUserReq(localStorage["login"])
+				document.getElementById('listaCabecera').innerHTML=
+				'<span class="navbar-text">Bienvenido, </span>'+
+				'<li><a href="usuario?login='+localStorage["login"]+'">'+nombre+'</li>'+
+				'<li><a href="javascript:logout()">Logout</a></li>'
 
-			return nombre
-		}*/
+			}
+		}
+
+		function logout() {
+			localStorage.removeItem('login');
+			window.location = "index";
+		}
 
 	    function showLightbox() {
 	        document.getElementById('over').style.display='block';
@@ -74,23 +74,23 @@
 
 	    /*Mensajes de alerta para el login*/
 	    var showAlert200 = function(){
-	    	document.getElementById('alertLogin200').style.display='block'
+	    	document.getElementById('alertLogin200').style.display="block"
 	    	document.getElementById('closeAlert200').onclick = function () {
-	    		document.getElementById('alertLogin200').style.display='none'
+	    		document.getElementById('alertLogin200').style.display="none"
 	    	}
 	    }
 
 	    var showAlert400 = function(){
 	    	document.getElementById('alertaLogin400').style.display="block"
 	    	document.getElementById('closeAlertaLogin').onclick = function () {
-	    		document.getElementById('alertaLogin400').style.display='none'
+	    		document.getElementById('alertaLogin400').style.display="none"
 	    	}
 	    }
 
 	    var showAlert403 = function(){
 	    	document.getElementById('alertaLogin403').style.display="block"
 	    	document.getElementById('closeAlerta403').onclick = function () {
-	    		document.getElementById('alertaLogin403').style.display='none'
+	    		document.getElementById('alertaLogin403').style.display="none"
 	    	}
 	    }
 
@@ -102,6 +102,7 @@
 	    				localStorage.login = document.getElementById('inputLogin').value;
 	    				hideLoginLightbox();
 	    				showAlert200();
+	    				window.onload();
 	    				break;
 	    			case 400:
 	    				showAlert400();
