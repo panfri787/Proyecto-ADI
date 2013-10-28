@@ -183,23 +183,22 @@
               <legend>
                 Login
               </legend>
-              <div class="form-group">
+              <div class="form-group" id="divLogin1">
                         <label for="inputLogin" class="col-lg-3 control-label">Login</label>
                         <div class="col-lg-5">
                           <input type="text" class="form-control" id="inputLogin" placeholder="Login">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="divPassword1">
                         <label for="inputPassword" class="col-lg-3 control-label">Password</label>
                         <div class="col-lg-5">
                           <input type="password" class="form-control" id="inputPassword" placeholder="Passwords">
                         </div>
                     </div>
                     <div class="form-group"></div>
-                  
                   <div class="form-group">
                     <div class="col-lg-9 col-lg-offset-3">
-                      <input type="submit" class="btn btn-primary"> 
+                      <input type="button" class="btn btn-primary" value="Enviar" id="botonLogin"> 
                     </div>
                   </div>
                   <div class="form-group"></div>
@@ -207,6 +206,19 @@
             </fieldset>
           </form>
         <a href="javascript:hideLoginLightbox();">Cerrar LightBox</a>
+      </div>
+      <div id="alertaLogin400" class="alertLogin">
+        <div class="alert alert-dismissable alert-danger">
+          <button id="closeAlertaLogin" type="button" class="close">×</button>
+          <b>Error 400:</b> Hay campos obligatorios vacios.
+        </div>
+      </div>
+
+      <div id="alertaLogin403" class="alertLogin">
+        <div class="alert alert-dismissable alert-danger">
+          <button id="closeAlerta403" type="button" class="close">×</button>
+          <b>Error 403:</b> No existe un usuario registrado con esos datos.
+        </div>
       </div>
     </div>
     <div id="fadeLogin" class="fadebox">&nbsp;</div>
@@ -263,24 +275,14 @@
     </div>
     <div id="fade" class="fadebox">&nbsp;</div>
 
-    <script type="text/javascript">
-      function showLightbox() {
-          document.getElementById('over').style.display='block';
-          document.getElementById('fade').style.display='block';
-      }
-      function hideLightbox() {
-          document.getElementById('over').style.display='none';
-          document.getElementById('fade').style.display='none';
-      }
-      function showLoginLightbox() {
-        document.getElementById('overLogin').style.display='block';
-        document.getElementById('fadeLogin').style.display='block';
-      }
-      function hideLoginLightbox() {
-        document.getElementById('overLogin').style.display='none';
-        document.getElementById('fadeLogin').style.display='none';
-      }
-    </script>
+    <div id="alertLogin200" class="alertLogin">
+      <div class="alert alert-dismissable alert-success">
+        <button id="closeAlert200" type="button" class="close">×</button>
+        Login realizado correctamente.
+      </div>
+    </div>
+
+    <script type="text/javascript" src="login-registro.js"></script>
 
 
 </body>
