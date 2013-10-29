@@ -1,5 +1,4 @@
-		//TODO: Mostrar nombre en la cabecera
-
+		//Muestran nombre en la cabecera
 		var insertaNombre = function(){
 			if(req.readyState == 4){
 				if(req.status == 200){
@@ -14,9 +13,7 @@
 			req.open('GET', 'api/usuarios/'+login, true)
 			req.onreadystatechange = insertaNombre
 			req.send()
-		}
-
-		
+		}		
 
 		function logout() {
 			localStorage.removeItem('login');
@@ -96,9 +93,6 @@
 	    				showAlert200();
 	    				window.onload();
 	    				break;
-	    			case 400:
-	    				showAlert400();
-	    				break;
 	    			case 403:
 	    				showAlert403();
 	    				break;
@@ -107,13 +101,20 @@
 	    }
 
 	    document.getElementById("botonLogin").onclick=function(){
-	    	req = new XMLHttpRequest();
-	    	var id = document.getElementById('inputLogin').value;
-	    	var pass = document.getElementById('inputPassword').value;
-	    	req.open('POST', 'login', true);
-	    	req.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
-	    	req.onreadystatechange = callbackLogin;
-	    	req.send('login='+id+'&password='+pass);
+	    	var inLogin = document.getElementById('inputLogin')
+	    	var inPass = document.getElementById('inputPassword')
+
+	    	if(inLogin.value != "" && inputPassword.value != ""){
+	    		req = new XMLHttpRequest();
+		    	var id = document.getElementById('inputLogin').value;
+		    	var pass = document.getElementById('inputPassword').value;
+		    	req.open('POST', 'login', true);
+		    	req.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
+		    	req.onreadystatechange = callbackLogin;
+		    	req.send('login='+id+'&password='+pass);
+	    	} else {
+	    		showAlert400();
+	    	}
 	    }
 
 
@@ -164,7 +165,7 @@
 
 	    //Pablo te comento esta linea porque no existen estos input en la vista y fallan cosas.
 	    //Descomentalo cuando lo arregles.
-	    
+
 	    /*document.getElementById("inputPassword2").onfocus = function() {
 	    	if(document.getElementById("inputEmail").value == "") {
 	    		document.getElementById("divEmail").className += " has-warning"
