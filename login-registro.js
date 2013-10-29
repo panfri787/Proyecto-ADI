@@ -1,9 +1,31 @@
+		//Funcion que rellena la barra de navegacion de la pagina.
+		var rellenaCabecera = function(){
+			if(localStorage.login === undefined){
+                document.getElementById('listaCabecera').innerHTML=
+                '<li><a href="javascript:showLoginLightbox()">Login</a></li>'+
+                '<li><a href="javascript:showLightbox();">Registrarse</a></li>'
+            } else {
+                if(document.getElementById('nombreConectado') == undefined){
+                    nombreUserReq(localStorage["login"])
+                    document.getElementById('listaCabecera').innerHTML=
+                    '<li class="dropdown">'+
+                    '<a class="dropdown-toggle" data-toggle="dropdown" id="nombreConectado" href="#"></a>'
+                    +'<ul class="dropdown-menu">'+
+                    '<li><a href=usuario?login='+localStorage["login"]+'>Mi perfil</a></li>'+
+                    '<li><a href="javascript:logout()">Logout</a></li>'+
+                    '</li>'
+                }
+            }
+		}
+
+
 		//Muestran nombre en la cabecera
 		var insertaNombre = function(){
 			if(req.readyState == 4){
 				if(req.status == 200){
 					var usuario = JSON.parse(req.responseText)
-					document.getElementById('nombreConectado').innerHTML = usuario.nombre
+					document.getElementById('nombreConectado').innerHTML = usuario.nombre+
+					' <b class="caret"></b>'
 				}
 			}
 		}
