@@ -1,30 +1,22 @@
 		//TODO: Mostrar nombre en la cabecera
 
-
+		var insertaNombre = function(){
+			if(req.readyState == 4){
+				if(req.status == 200){
+					var usuario = JSON.parse(req.responseText)
+					document.getElementById('nombreConectado').innerHTML = usuario.nombre
+				}
+			}
+		}
 
 		var nombreUserReq = function(login) {
 			req = new XMLHttpRequest();
-			req.open('GET', 'api/usuarios/'+login, false)
+			req.open('GET', 'api/usuarios/'+login, true)
+			req.onreadystatechange = insertaNombre
 			req.send()
-			
-			var usuario = JSON.parse(req.responseText)
-			return usuario.nombre;
 		}
 
-		window.onload = function(){
-			if(localStorage.login === undefined){
-				document.getElementById('listaCabecera').innerHTML=
-				'<li><a href="javascript:showLoginLightbox()">Login</a></li>'+
-				'<li><a href="javascript:showLightbox();">Registrarse</a></li>'
-			} else {
-				var nombre = nombreUserReq(localStorage["login"])
-				document.getElementById('listaCabecera').innerHTML=
-				'<span class="navbar-text">Bienvenido, </span>'+
-				'<li><a href="usuario?login='+localStorage["login"]+'">'+nombre+'</li>'+
-				'<li><a href="javascript:logout()">Logout</a></li>'
-
-			}
-		}
+		
 
 		function logout() {
 			localStorage.removeItem('login');
@@ -170,7 +162,10 @@
 	    	}
 	    }
 
-	    document.getElementById("inputPassword2").onfocus = function() {
+	    //Pablo te comento esta linea porque no existen estos input en la vista y fallan cosas.
+	    //Descomentalo cuando lo arregles.
+	    
+	    /*document.getElementById("inputPassword2").onfocus = function() {
 	    	if(document.getElementById("inputEmail").value == "") {
 	    		document.getElementById("divEmail").className += " has-warning"
 	    	}
@@ -195,4 +190,4 @@
 	    	else {
 	    		document.getElementById("divPassword2").className = "form-group"
 	    	}
-	    }
+	    }*/

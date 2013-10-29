@@ -169,6 +169,22 @@
 	</div>
 
 	<script type="text/javascript" src="login-registro.js"> </script>
+	<script type="text/javascript">
+		window.onload = function(){
+			if(localStorage.login === undefined){
+				document.getElementById('listaCabecera').innerHTML=
+				'<li><a href="javascript:showLoginLightbox()">Login</a></li>'+
+				'<li><a href="javascript:showLightbox();">Registrarse</a></li>'
+			} else {
+				var nombre = nombreUserReq(localStorage["login"])
+				document.getElementById('listaCabecera').innerHTML=
+				'<span class="navbar-text">Bienvenido, </span>'+
+				'<li><a id="nombreConectado" href="usuario?login='+localStorage["login"]+'"></li>'+
+				'<li><a href="javascript:logout()">Logout</a></li>'
+
+			}
+		}
+	</script>
 
 	</body>
 </html>
