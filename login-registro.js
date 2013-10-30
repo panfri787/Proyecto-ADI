@@ -10,6 +10,7 @@
                 if(document.getElementById('nombreConectado') == undefined){
                     nombreUserReq(localStorage["login"])
                     document.getElementById('listaCabecera').innerHTML=
+                    '<li> <a href="#">Crear petición</a> </li>'+
                     '<li class="dropdown">'+
                     '<a class="dropdown-toggle" data-toggle="dropdown" id="nombreConectado" href="#"></a>'
                     +'<ul class="dropdown-menu">'+
