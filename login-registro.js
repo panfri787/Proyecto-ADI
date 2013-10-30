@@ -116,12 +116,20 @@
 	    		document.getElementById('alertRegistroWarning').style.display = "none"
 	    	}
 	    }
-	    //TODO: PREGUNTAME POR ESTO VERDU Y TE COMENTO
+	    // Error de que faltan datos
 	    var showRegistroAlert400 = function() {
 	    	document.getElementById('alertRegistro400').style.display = "block"
 	    	document.getElementById('closeRegistroAlert400').onclick = function()
 	    	{
 	    		document.getElementById('alertRegistro400').style.display = "none"
+	    	}
+	    }
+
+	    var showRegistroError = function() {
+	    	document.getElementById('alertRegistroErrorBD').style.display = "block"
+	    	document.getElementById('closeRegistroErrorBD').onclick = function()
+	    	{
+	    		document.getElementById('alertRegistroErrorBD').style.display = "none"
 	    	}
 	    }
 
@@ -142,6 +150,7 @@
 	    	}
 	    }
 
+
 	    document.getElementById("botonRegistro").onclick = function() {
 	    	var inNombre = document.getElementById('inputNombre')
 	    	var inApellidos = document.getElementById('inputApellidos')
@@ -153,6 +162,7 @@
 	  			inputEmail.value != "" && inputRePassword.value != "" &&
 	  			inputRePassword2.value != "")
 	  		{
+	  			//Elementos a enviar
 	    		var email = document.getElementById('inputEmail').value;
 	    		var password = document.getElementById('inputRePassword').value;
 	    		var apellidos = document.getElementById('inputApellidos').value;
@@ -160,9 +170,11 @@
 	    		// TODO: ¿rol a null?
 	  			req = new XMLHttpRequest();
 	  			// URL: api/usuarios
+	  			// true == asincrona
 	  			req.open('POST', 'usuarios', true);
+	  			// Indicamos al servidor que le llegan datos
 	  			req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
-		    	req.onreadystatechange = callbackLogin;
+		    	req.onreadystatechange = callbackRegistro; // TODO: QUE FUNCION HACE ESTO?
 		    	req.send('login=' + email + '&email=' + email + '&password=' + password + 
 		    		'&apellidos=' + apellidos + '&nombre=' + nombre);
 	  		}
@@ -170,6 +182,19 @@
 	  		{
 	  			showRegistroAlert400();
 	  		}
+	    }
+
+	    var callbackRegistro = function() {
+	    	// Estado 4 -> !Completado!
+	    	if(readyState == 4) { 
+	    		if(req.status == 201) {
+	    			showRegistroAlert201();
+	    		}
+	    		else {
+	    			//Error de que no se han procesado bien los datos
+	    			showRegistroError();
+	    		}
+	    	}
 	    }
 
 	    /*Controles del lightbox login*/
@@ -264,10 +289,11 @@
 	    		document.getElementById("divRePassword").className = "form-group"
 	    	}
 	    }
-
+	    //Cuando pierdo el foco
 	    document.getElementById("inputRePassword2").onblur = function() {
-	    	if(document.getElementById("inputRePassword2") == "") 
+	    	if(document.getElementById("inputRePassword2").value == "") 
 	    	{
+	    		console.log("ola k ase")
 	    		document.getElementById("divRePassword2").className += " has-warning"
 	    	}
 	    	else {
