@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 
 
 <html>
@@ -17,7 +17,7 @@
 				</div>
 				<ul id="listaCabecera" class="nav navbar-nav navbar-right">
 					<li><a href="javascript:showLoginLightbox()">Login</a></li>
-					<li><a href="javascript:showLightbox();">Registrarse</a></li>
+					<li><a href="javascript:showLightbox()">Registrarse</a></li>
 	            </ul>
 			</div>
 		</div>
@@ -137,26 +137,39 @@
 		                      <input type="text" class="form-control" id="inputEmail" placeholder="Email">
 		                    </div>
 		                </div>
-		                <div id="divPassword2" class="form-group">
-		                    <label for="inputPassword" class="col-lg-3 control-label">Password</label>
+		                <div id="divRePassword" class="form-group">
+		                    <label for="inputRePassword" class="col-lg-3 control-label">Password</label>
 		                    <div class="col-lg-5">
-		                      <input type="password" class="form-control"  id="inputPassword2" placeholder="Password">
+		                      <input type="password" class="form-control"  id="inputRePassword" placeholder="Password">
 		                    </div>
 		                </div>
 		                <div id="divRePassword2" class="form-group">
-		                    <label for="inputRepeatPassword" class="col-lg-3 control-label">Repite Password</label>
+		                    <label for="inputRePassword2" class="col-lg-3 control-label">Repite Password</label>
 		                    <div class="col-lg-5">
-		                      <input type="password" class="form-control"  id="inputRepeatPassword" placeholder="Repite Password">
+		                      <input type="password" class="form-control"  id="inputRePassword2" placeholder="Repite Password">
 		                    </div>
 		                </div>
 			            <div class="form-group">
 			            	<div class="col-lg-9 col-lg-offset-3">
-			            		<input id="Enviar" type="button" value="Enviar" class="btn btn-primary">
+			            		<input id="botonRegistro" type="button" value="Enviar" class="btn btn-primary">
 			            	</div>
 			            </div>
 	  				</fieldset>
 	  			</form>
-				<a href="javascript:hideLightbox();">Cerrar LightBox</a>
+				<a href="javascript:hideRegistroLightbox();">Cerrar LightBox</a>
+			</div>
+			<div id="alertRegistro400" class="alertLogin">
+				<div class="alert alert-dismissable alert-danger">
+					<button id="closeRegistroAlert400" type="button" class="close">×</button>
+					Hay campos obligatorios vacios.
+				</div>
+			</div>
+			
+			<div id="alertRegistroWarning" class="alertLogin">
+				<div class="alert alert-dismissable alert-warning">
+					<button id="closeRegistroWarning" type="button" class="close">x</button>
+					La contraseña debe coincidir
+				</div>
 			</div>
 		</div>
 	<div id="fade" class="fadebox">&nbsp;</div>
@@ -166,6 +179,12 @@
 			<button id="closeAlert200" type="button" class="close">×</button>
 			Login realizado correctamente.
 		</div>
+	</div>
+
+	<div id="alertRegistro201" class="alertLogin">
+		<div class="alert alert-dismissable alert-success">
+			<button id="closeRegistroAlert201" type="button" class="close">x</button>
+			Usuario registrado correctamente
 	</div>
 
 	<script type="text/javascript" src="login-registro.js"></script>

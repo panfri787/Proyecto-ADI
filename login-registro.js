@@ -1,3 +1,5 @@
+		
+
 		//Funcion que rellena la barra de navegacion de la pagina.
 		var rellenaCabecera = function(){
 			if(localStorage.login === undefined){
@@ -17,7 +19,6 @@
                 }
             }
 		}
-
 
 		//Muestran nombre en la cabecera
 		var insertaNombre = function(){
@@ -45,8 +46,19 @@
 	    function showLightbox() {
 	        document.getElementById('over').style.display='block';
 	        document.getElementById('fade').style.display='block';
+	        // Vacio y normalizo los campos del registro
+	    	document.getElementById('inputNombre').value = '';
+	    	document.getElementById('inputApellidos').value = '';
+	    	document.getElementById('inputEmail').value = '';
+	    	document.getElementById('inputRePassword').value = '';
+	    	document.getElementById('inputRePassword2').value = '';
+	    	document.getElementById('divNombre').className = 'form-group';
+	    	document.getElementById('divApellidos').className = 'form-group';
+	    	document.getElementById('divEmail').className = 'form-group';
+	    	document.getElementById('divRePassword').className = 'form-group';
+	    	document.getElementById('divRePassword2').className = 'form-group';
 	    }
-	    function hideLightbox() {
+	    function hideRegistroLightbox() {
 	        document.getElementById('over').style.display='none';
 	        document.getElementById('fade').style.display='none';
 	    }
@@ -64,24 +76,6 @@
 	    	document.getElementById('overLogin').style.display='none';
 	    	document.getElementById('fadeLogin').style.display='none';
 	    }
-	    /*
-	    document.getElementById("Enviar").onclick = function() {
-	    	if(document.getElementById("inputNombre").value == "") {
-	    		document.getElementById("divNombre").className += " has-warning";
-	    	}
-	    	if(document.getElementById("inputApellidos").value == "") {
-	    		document.getElementById("divApellidos").className += " has-warning";
-	    	}
-	    	if(document.getElementById("inputEmail").value == "") {
-	    		document.getElementById("divEmail").className += " has-warning";
-	    	}
-	    	if(document.getElementById("inputPassword").value == "") {
-	    		document.getElementById("divPassword").className += " has-warning";
-	    	}
-	    	if(document.getElementById("inputRepeatPassword").value == "") {
-	    		document.getElementById("divRePassword").className += " has-warning";
-	    	}
-	    }*/
 
 	    /*Mensajes de alerta para el login*/
 	    var showAlert200 = function(){
@@ -105,20 +99,28 @@
 	    	}
 	    }
 
-	    /*Logica del login*/
-	    var callbackLogin = function(){
-	    	if (req.readyState == 4){
-	    		switch(req.status){
-	    			case 200:
-	    				localStorage.login = document.getElementById('inputLogin').value;
-	    				hideLoginLightbox();
-	    				showAlert200();
-	    				window.onload();
-	    				break;
-	    			case 403:
-	    				showAlert403();
-	    				break;
-	    		}
+	    /* Mensajes de alerta para el registro */
+	    var showRegistroAlert201 = function() {
+	    	document.getElementById('alertRegistro201').style.display = "block"
+	    	document.getElementById('closeRegistroAlert201').onclick = function() 
+	    	{
+	    		document.getElementById('alertRegistro201').style.display = "none"
+	    	}
+	    }
+	    // Warning de repetir password
+	    var showRegistroWarning = function() {
+	    	document.getElementById('alertRegistroWarning').style.display = "block"
+	    	document.getElementById('closeRegistroWarning').onclick = function()
+	    	{
+	    		document.getElementById('alertRegistroWarning').style.display = "none"
+	    	}
+	    }
+	    //TODO: PREGUNTAME POR ESTO VERDU Y TE COMENTO
+	    var showRegistroAlert400 = function() {
+	    	document.getElementById('alertRegistro400').style.display = "block"
+	    	document.getElementById('closeRegistroAlert400').onclick = function()
+	    	{
+	    		document.getElementById('alertRegistro400').style.display = "none"
 	    	}
 	    }
 
@@ -139,7 +141,35 @@
 	    	}
 	    }
 
+	    document.getElementById("botonRegistro").onclick = function() {
+	    	var inNombre = document.getElementById('inputNombre')
+	    	var inApellidos = document.getElementById('inputApellidos')
+	    	var inEmail = document.getElementById('inputEmail')
+	    	var inPass = document.getElementById('inputRePassword')
+	    	var inPass2 = document.getElementById('inputRePassword2')
 
+	  		if(inputNombre.value != "" && inputApellidos.value != "" &&
+	  			inputEmail.value != "" && inputRePassword.value != "" &&
+	  			inputRePassword2.value != "")
+	  		{
+	    		var email = document.getElementById('inputEmail').value;
+	    		var password = document.getElementById('inputRePassword').value;
+	    		var apellidos = document.getElementById('inputApellidos').value;
+	    		var nombre = document.getElementById('inputNombre').value;
+	    		// TODO: ¿rol a null?
+	  			req = new XMLHttpRequest();
+	  			// URL: api/usuarios
+	  			req.open('POST', 'usuarios', true);
+	  			req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+		    	req.onreadystatechange = callbackLogin;
+		    	req.send('login=' + email + '&email=' + email + '&password=' + password + 
+		    		'&apellidos=' + apellidos + '&nombre=' + nombre);
+	  		}
+	  		else
+	  		{
+	  			showRegistroAlert400();
+	  		}
+	    }
 
 	    /*Controles del lightbox login*/
 	    document.getElementById("inputLogin").onblur = function () {
@@ -167,50 +197,84 @@
 	    }
 
 	    /*Controles del lightbox registro*/
+	    // onBlur == outside
+	    // onFocus == inside
 	    document.getElementById("inputApellidos").onfocus = function() {
-	    	if(document.getElementById("inputNombre").value == "") {
+	    	if(document.getElementById("inputNombre").value == "") 
+	    	{
 	    		document.getElementById("divNombre").className += " has-warning"
 	    	}
-	    	else {
+	    	else 
+	    	{
 	    		document.getElementById("divNombre").className = "form-group"
 	    	}
 	    }
 
 	    document.getElementById("inputEmail").onfocus = function() {
-	    	if(document.getElementById("inputApellidos").value == "") {
+	    	// Compruebo los 2 label anteriores
+	    	if(document.getElementById("inputApellidos").value == "" &&
+	    		document.getElementById("inputEmail").value == "") 
+	    	{
 	    		document.getElementById("divApellidos").className += " has-warning"
+	    		document.getElementById("divNombre").className += " has-warning"
 	    	}
-	    	else {
+	    	else 
+	    	{
 	    		document.getElementById("divApellidos").className = "form-group"
+	    		document.getElementById("divNombre").className = "form-group"
 	    	}
 	    }
 
-	    //Pablo te comento esta linea porque no existen estos input en la vista y fallan cosas.
-	    //Descomentalo cuando lo arregles.
-
-	    /*document.getElementById("inputPassword2").onfocus = function() {
-	    	if(document.getElementById("inputEmail").value == "") {
+	    document.getElementById("inputRePassword").onfocus = function() {
+	    	// Compruebo los 3 label anteriores
+	    	if(document.getElementById("inputNombre").value == "" &&
+	    		document.getElementById("inputApellidos").value == "" &&
+	    		document.getElementById("inputEmail").value == "") 
+	    	{
+	    		document.getElementById("divNombre").className += " has-warning"
+	    		document.getElementById("divApellidos").className += " has-warning"
 	    		document.getElementById("divEmail").className += " has-warning"
 	    	}
-	    	else {
+	    	else 
+	    	{
+	    		document.getElementById("divNombre").className = "form-group"
+	    		document.getElementById("divApellidos").className = "form-group"
 	    		document.getElementById("divEmail").className = "form-group"
 	    	}
 	    }
-
-	    document.getElementById("inputPassword2").onfocus = function() {
-	    	if(document.getElementById("inputEmail").value == "") {
+	    
+	    document.getElementById("inputRePassword2").onfocus = function() {
+	    	// Compruebo los 4 label anteriores
+	    	if( document.getElementById("inputNombre").value == "" &&
+	    		document.getElementById("inputApellidos").value == "" &&
+	    		document.getElementById("inputEmail").value == "" &&
+	    		document.getElementById("inputPassword").value == "") 
+	    	{
+	    		document.getElementById("divNombre").className += " has-warning"
+	    		document.getElementById("divApellidos").className += " has-warning"
 	    		document.getElementById("divEmail").className += " has-warning"
+	    		document.getElementById("divRePassword").className += " has-warning"
 	    	}
-	    	else {
+	    	else 
+	    	{
+	    		document.getElementById("divNombre").className = "form-group"
+	    		document.getElementById("divApellidos").className = "form-group"
 	    		document.getElementById("divEmail").className = "form-group"
+	    		document.getElementById("divRePassword").className = "form-group"
 	    	}
 	    }
 
-	    document.getElementById("inputRepeatPassword").onfocus = function() {
-	    	if(document.getElementById("inputPassword2").value == "") {
-	    		document.getElementById("divPassword2").className += " has-warning"
+	    document.getElementById("inputRePassword2").onblur = function() {
+	    	if(document.getElementById("inputRePassword2") == "") 
+	    	{
+	    		document.getElementById("divRePassword2").className += " has-warning"
 	    	}
 	    	else {
-	    		document.getElementById("divPassword2").className = "form-group"
+	    		if(document.getElementById("inputRePassword").value !=
+	    			document.getElementById("inputRePassword2").value) {
+	    			document.getElementById("divRePassword2").className += " has-warning"
+	    			showRegistroWarning();
+	    		}
+
 	    	}
-	    }*/
+	    }
