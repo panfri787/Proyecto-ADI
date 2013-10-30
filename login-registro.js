@@ -22,7 +22,7 @@
 		}
 
 		//Muestran nombre en la cabecera
-		var insertaNombre = function(){
+		var insertaNombre = function(req){
 			if(req.readyState == 4){
 				if(req.status == 200){
 					var usuario = JSON.parse(req.responseText)
@@ -35,7 +35,7 @@
 		var nombreUserReq = function(login) {
 			req = new XMLHttpRequest();
 			req.open('GET', 'api/usuarios/'+login, true)
-			req.onreadystatechange = insertaNombre
+			req.onreadystatechange = insertaNombre(req);
 			req.send()
 		}		
 
@@ -133,6 +133,14 @@
 	    	}
 	    }
 
+	    var showRegistroEmailError = function() {
+	    	document.getElementById('alertRegistroErrorEmail').style.display = "block"
+	    	document.getElementById('closeRegistroErrorEmail').onclick = function()
+	    	{
+	    		document.getElementById('alertRegistroErrorEmail').style.display = "none"
+	    	}
+	    }
+
 	    document.getElementById("botonLogin").onclick=function(){
 	    	var inLogin = document.getElementById('inputLogin')
 	    	var inPass = document.getElementById('inputPassword')
@@ -143,11 +151,26 @@
 		    	var pass = document.getElementById('inputPassword').value;
 		    	req.open('POST', 'login', true);
 		    	req.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
-		    	req.onreadystatechange = callbackLogin;
+		    	req.onreadystatechange = callbackLogin(req,id);
 		    	req.send('login='+id+'&password='+pass);
 	    	} else {
 	    		showAlert400();
 	    	}
+	    }
+
+	    // ¡Hey Doc!, ¿y que va a hacer?... ¿Volver al futuro? —No... ya estuve en el futuro. 
+	    var callbackLogin = function(req,id) {
+	    	console.log("state " + req.readyState)
+	    	if(req.readyState == 4) {
+
+	    		if(req.status == 200) {
+
+	    			// Muestro el estado aceptado (cambialo o ponle tiempo)
+	    			showAlert200();
+	    			// Carga las cabeceras
+	    			nombreUserReq(id)
+	    		}
+	    	} 
 	    }
 
 
@@ -171,10 +194,10 @@
 	  			req = new XMLHttpRequest();
 	  			// URL: api/usuarios
 	  			// true == asincrona
-	  			req.open('POST', 'usuarios', true);
+	  			req.open('POST', 'api/usuarios', true);
 	  			// Indicamos al servidor que le llegan datos
 	  			req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
-		    	req.onreadystatechange = callbackRegistro; // TODO: QUE FUNCION HACE ESTO?
+		    	req.onreadystatechange = callbackRegistro(req, email); 
 		    	req.send('login=' + email + '&email=' + email + '&password=' + password + 
 		    		'&apellidos=' + apellidos + '&nombre=' + nombre);
 	  		}
@@ -184,11 +207,13 @@
 	  		}
 	    }
 
-	    var callbackRegistro = function() {
+	    var callbackRegistro = function(req, email) {
 	    	// Estado 4 -> !Completado!
-	    	if(readyState == 4) { 
+	    	if(req.readyState == 4) { 
 	    		if(req.status == 201) {
 	    			showRegistroAlert201();
+	    			// Carga las cabeceras
+	    			nombreUserReq(email)
 	    		}
 	    		else {
 	    			//Error de que no se han procesado bien los datos
@@ -289,11 +314,11 @@
 	    		document.getElementById("divRePassword").className = "form-group"
 	    	}
 	    }
-	    //Cuando pierdo el foco
+
+	    // Se lanza cuando pierdo el foco
 	    document.getElementById("inputRePassword2").onblur = function() {
 	    	if(document.getElementById("inputRePassword2").value == "") 
 	    	{
-	    		console.log("ola k ase")
 	    		document.getElementById("divRePassword2").className += " has-warning"
 	    	}
 	    	else {
@@ -305,3 +330,23 @@
 
 	    	}
 	    }
+
+	   	// Comprobar si el login(email) ya está en uso
+	   	document.getElementById("inputEmail").onchange = function() {
+	   		console.log("ola k ase")
+	   		var email = document.getElementById('inputEmail').value;
+	   		var req = new XMLHttpRequest();
+	   		req.open('GET','api/loginDisponible/'+ email, true);
+	   		req.onreadystatechange = callbackBusqueda(req);
+	   		req.send(null);
+	   	}
+
+	   	// Callback de busqueda del login (email)
+	   	var callbackBusqueda = function(req) {
+	   		// El servidor siempre devuelve con status 200 una cadena
+	   			var mensaje = req.responseText;
+	   			console.log("Mensaje " + mensaje.value)
+	   			if(mensaje.value == "NO")
+	   				showRegistroEmailError();
+	   	}
+
