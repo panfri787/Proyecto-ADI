@@ -188,20 +188,21 @@
 	  			inputRePassword2.value != "")
 	  		{
 	  			//Elementos a enviar
-	    		var email = document.getElementById('inputEmail').value;
-	    		var password = document.getElementById('inputRePassword').value;
-	    		var apellidos = document.getElementById('inputApellidos').value;
-	    		var nombre = document.getElementById('inputNombre').value;
-	    		// TODO: ¿rol a null?
+	  			var usuario = new Object();
+	  			usuario.login = document.getElementById('inputEmail').value;
+	  			usuario.password = new String(document.getElementById('inputRePassword').value);
+	  			usuario.nombre = document.getElementById('inputNombre').value;
+	  			usuario.apellidos = document.getElementById('inputApellidos').value;
+	  			usuario.email = document.getElementById('inputEmail').value;
+	  			usuario.rol = null;
 	  			req = new XMLHttpRequest();
 	  			// URL: api/usuarios
 	  			// true == asincrona
 	  			req.open('POST', 'api/usuarios', true);
-	  			// Indicamos al servidor que le llegan datos
-	  			req.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
-		    	req.onreadystatechange = callbackRegistro(req, email); 
-		    	req.send('login=' + email + '&email=' + email + '&password=' + password + 
-		    		'&apellidos=' + apellidos + '&nombre=' + nombre);
+	  			// Indicamos al servidor que le llegan datos en formato JSON
+		    	req.setRequestHeader("Content-type", "application/json")
+		    	req.onreadystatechange = callbackRegistro;
+				req.send(JSON.stringify(usuario));
 	  		}
 	  		else
 	  		{
@@ -209,10 +210,11 @@
 	  		}
 	    }
 
-	    var callbackRegistro = function(req, email) {
+	    var callbackRegistro = function() {
 	    	// Estado 4 -> !Completado!
 	    	if(req.readyState == 4) { 
 	    		if(req.status == 201) {
+	    			console.log("registrado")
 	    			showRegistroAlert201();
 	    			// Carga las cabeceras
 	    			nombreUserReq(email)
@@ -264,9 +266,9 @@
 	    }
 
 	    document.getElementById("inputEmail").onfocus = function() {
-	    	// Compruebo los 2 label anteriores
+    		// Compruebo los 2 label anteriores
 	    	if(document.getElementById("inputApellidos").value == "" &&
-	    		document.getElementById("inputEmail").value == "") 
+	    		document.getElementById("inputNombre").value == "") 
 	    	{
 	    		document.getElementById("divApellidos").className += " has-warning"
 	    		document.getElementById("divNombre").className += " has-warning"
@@ -279,41 +281,74 @@
 	    }
 
 	    document.getElementById("inputRePassword").onfocus = function() {
-	    	// Compruebo los 3 label anteriores
-	    	if(document.getElementById("inputNombre").value == "" &&
+	    	//Si el email no es NULL y los demas SI
+	    	if(document.getElementById("inputEmail").value != "" &&
 	    		document.getElementById("inputApellidos").value == "" &&
-	    		document.getElementById("inputEmail").value == "") 
+	    		document.getElementById("inputNombre").value == "")
 	    	{
 	    		document.getElementById("divNombre").className += " has-warning"
-	    		document.getElementById("divApellidos").className += " has-warning"
-	    		document.getElementById("divEmail").className += " has-warning"
+		    	document.getElementById("divApellidos").className += " has-warning"
 	    	}
 	    	else 
 	    	{
-	    		document.getElementById("divNombre").className = "form-group"
-	    		document.getElementById("divApellidos").className = "form-group"
-	    		document.getElementById("divEmail").className = "form-group"
+	    		// Compruebo los 3 label anteriores
+		    	if(document.getElementById("inputNombre").value == "" &&
+		    		document.getElementById("inputApellidos").value == "" &&
+		    		document.getElementById("inputEmail").value == "") 
+		    	{
+		    		document.getElementById("divNombre").className += " has-warning"
+		    		document.getElementById("divApellidos").className += " has-warning"
+		    		document.getElementById("divEmail").className += " has-warning"
+		    	}
+		    	else 
+		    	{
+		    		document.getElementById("divNombre").className = "form-group"
+		    		document.getElementById("divApellidos").className = "form-group"
+		    		document.getElementById("divEmail").className = "form-group"
+		    	}
 	    	}
 	    }
 	    
 	    document.getElementById("inputRePassword2").onfocus = function() {
-	    	// Compruebo los 4 label anteriores
-	    	if( document.getElementById("inputNombre").value == "" &&
-	    		document.getElementById("inputApellidos").value == "" &&
-	    		document.getElementById("inputEmail").value == "" &&
-	    		document.getElementById("inputPassword").value == "") 
+	    	// Compruebo email+pass
+	    	if(document.getElementById("inputEmail").value != "" &&
+	    		document.getElementById("inputRePassword").value != "" &&
+	    		document.getElementById("inputNombre").value == "" &&
+	    		document.getElementById("inputApellidos").value == "")
 	    	{
 	    		document.getElementById("divNombre").className += " has-warning"
 	    		document.getElementById("divApellidos").className += " has-warning"
-	    		document.getElementById("divEmail").className += " has-warning"
+	    	} 
+	    	// Compruebo si el email no es NULL y los demás si
+	    	else if(document.getElementById("inputEmail").value != "" &&
+	    		document.getElementById("inputNombre").value == "" &&
+	    		document.getElementById("inputApellidos").value == "" &&
+	    		document.getElementById("inputRePassword").value == "")
+	    	{
+	    		document.getElementById("divNombre").className += " has-warning"
+	    		document.getElementById("divApellidos").className += " has-warning"
 	    		document.getElementById("divRePassword").className += " has-warning"
 	    	}
 	    	else 
 	    	{
-	    		document.getElementById("divNombre").className = "form-group"
-	    		document.getElementById("divApellidos").className = "form-group"
-	    		document.getElementById("divEmail").className = "form-group"
-	    		document.getElementById("divRePassword").className = "form-group"
+	    		// Compruebo los 4 label anteriores
+		    	if( document.getElementById("inputNombre").value == "" &&
+		    		document.getElementById("inputApellidos").value == "" &&
+		    		document.getElementById("inputEmail").value == "" &&
+		    		document.getElementById("inputPassword").value == "") 
+		    	{
+		    		document.getElementById("divNombre").className += " has-warning"
+		    		document.getElementById("divApellidos").className += " has-warning"
+		    		document.getElementById("divEmail").className += " has-warning"
+		    		document.getElementById("divRePassword").className += " has-warning"
+		    	}
+		    	else 
+		    	{
+		    		document.getElementById("divNombre").className = "form-group"
+		    		document.getElementById("divApellidos").className = "form-group"
+		    		document.getElementById("divEmail").className = "form-group"
+		    		document.getElementById("divRePassword").className = "form-group"
+		    	}
 	    	}
 	    }
 
@@ -335,21 +370,30 @@
 
 	   	// Comprobar si el login(email) ya está en uso
 	   	document.getElementById("inputEmail").onchange = function() {
-	   		console.log("ola k ase")
-	   		var email = document.getElementById('inputEmail').value;
-	   		var req = new XMLHttpRequest();
-	   		req.open('GET','api/loginDisponible/'+ email, true);
-	   		req.onreadystatechange = callbackBusqueda(req);
-	   		req.send(null);
+	   		// Compruebo los 2 label anteriores despues de escribir
+	   		if(document.getElementById("inputApellidos").value == "" &&
+	    		document.getElementById("inputNombre").value == "")
+	    	{
+	    		document.getElementById("divApellidos").className += " has-warning"
+	    		document.getElementById("divNombre").className += " has-warning"
+	    	}
+	    	else 
+	    	{
+		   		var email = document.getElementById('inputEmail').value;
+		   		req = new XMLHttpRequest();
+		   		req.open('GET','api/loginDisponible/'+ email, true);
+		   		req.onreadystatechange = callbackBusqueda;
+		   		req.send();
+	    	}
+	   		
 	   	}
 
 	   	// Callback de busqueda del login (email)
-	   	var callbackBusqueda = function(req) {
+	   	var callbackBusqueda = function() {
 	   		// El servidor siempre devuelve con status 200 una cadena
-	   			var mensaje = req.responseText;
-	   			console.log("Mensaje " + mensaje.value)
-	   			if(mensaje.value == "NO")
-	   				showRegistroEmailError();
+   			var mensaje = req.responseText;
+   			if(mensaje == "no")
+   				showRegistroEmailError();
 	   	}
 
 	   	/* CREAR PETICION */
