@@ -194,7 +194,7 @@
 	  			usuario.nombre = document.getElementById('inputNombre').value;
 	  			usuario.apellidos = document.getElementById('inputApellidos').value;
 	  			usuario.email = document.getElementById('inputEmail').value;
-	  			usuario.rol = null;
+	  			usuario.rol = 'registrado';
 	  			req = new XMLHttpRequest();
 	  			// URL: api/usuarios
 	  			// true == asincrona
