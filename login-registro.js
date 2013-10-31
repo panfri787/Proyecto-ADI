@@ -214,10 +214,10 @@
 	    	// Estado 4 -> !Completado!
 	    	if(req.readyState == 4) { 
 	    		if(req.status == 201) {
-	    			console.log("registrado")
+	    			localStorage.login = document.getElementById('inputLogin').value;
+	    			hideRegistroLightbox();
 	    			showRegistroAlert201();
-	    			// Carga las cabeceras
-	    			nombreUserReq(email)
+	    			window.onload();
 	    		}
 	    		else {
 	    			//Error de que no se han procesado bien los datos
