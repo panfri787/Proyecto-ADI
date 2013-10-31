@@ -151,28 +151,29 @@
 		    	var pass = document.getElementById('inputPassword').value;
 		    	req.open('POST', 'login', true);
 		    	req.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
-		    	req.onreadystatechange = callbackLogin(req,id);
+		    	req.onreadystatechange = callbackLogin;
 		    	req.send('login='+id+'&password='+pass);
 	    	} else {
 	    		showAlert400();
 	    	}
 	    }
 
-	    // ¡Hey Doc!, ¿y que va a hacer?... ¿Volver al futuro? —No... ya estuve en el futuro. 
-	    var callbackLogin = function(req,id) {
-	    	console.log("state " + req.readyState)
-	    	if(req.readyState == 4) {
-
-	    		if(req.status == 200) {
-
-	    			// Muestro el estado aceptado (cambialo o ponle tiempo)
-	    			showAlert200();
-	    			// Carga las cabeceras
-	    			nombreUserReq(id)
+	    /*Logica del login*/
+	    var callbackLogin = function(){
+	    	if (req.readyState == 4){
+	    		switch(req.status){
+	    			case 200:
+	    				localStorage.login = document.getElementById('inputLogin').value;
+	    				hideLoginLightbox();
+	    				showAlert200();
+	    				window.onload();
+	    				break;
+	    			case 403:
+	    				showAlert403();
+	    				break;
 	    		}
-	    	} 
+	    	}
 	    }
-
 
 	    document.getElementById("botonRegistro").onclick = function() {
 	    	var inNombre = document.getElementById('inputNombre')
