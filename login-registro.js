@@ -23,7 +23,7 @@
 		}
 
 		//Muestran nombre en la cabecera
-		var insertaNombre = function(req){
+		var insertaNombre = function(){
 			if(req.readyState == 4){
 				if(req.status == 200){
 					var usuario = JSON.parse(req.responseText)
@@ -36,7 +36,7 @@
 		var nombreUserReq = function(login) {
 			req = new XMLHttpRequest();
 			req.open('GET', 'api/usuarios/'+login, true)
-			req.onreadystatechange = insertaNombre(req);
+			req.onreadystatechange = insertaNombre;
 			req.send()
 		}		
 
