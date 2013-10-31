@@ -186,31 +186,67 @@
 				</div>
 			</div>
 		</div>
-	<div id="fade" class="fadebox">&nbsp;</div>
+		<div id="fade" class="fadebox">&nbsp;</div>
 
-	<div id="alertLogin200" class="alertLogin">
-		<div class="alert alert-dismissable alert-success">
-			<button id="closeAlert200" type="button" class="close">×</button>
-			Login realizado correctamente.
+		<div id="alertLogin200" class="alertLogin">
+			<div class="alert alert-dismissable alert-success">
+				<button id="closeAlert200" type="button" class="close">×</button>
+				Login realizado correctamente.
+			</div>
 		</div>
-	</div>
 
-	<div id="alertRegistro201" class="alertLogin">
-		<div class="alert alert-dismissable alert-success">
-			<button id="closeRegistroAlert201" type="button" class="close">x</button>
-			Usuario registrado correctamente
-	</div>
+		<div id="alertRegistro201" class="alertLogin">
+			<div class="alert alert-dismissable alert-success">
+				<button id="closeRegistroAlert201" type="button" class="close">x</button>
+				Usuario registrado correctamente
+		</div>
 
-	<script type="text/javascript" src="login-registro.js"></script>
+		<!-- Nuevo lightbox para crear la peticion -->
+		<div id="overPeticion" class="overboxPeticion">
+			<div class="contentLightbox">
+				<form class="form-horizontal">
+	  				<fieldset>
+	  					<legend>
+	  						Crear Petición
+	  					</legend>
+	  					<!--TITULO-->
+	  					<div id="divTitulo" class="form-group">
+		                    <label for="inputTitulo" class="col-lg-5 control-label">Título</label>
+		                    <div class="col-lg-5">
+		                      <input type="text" class="form-control" id="inputTitulo" placeholder="Título">
+		                    </div>
+		                </div>
+		                <!--FECHA FIN-->
+		                <div id="divFecha" class="form-group">
+		                    <label for="inputFecha" class="col-lg-3 control-label">Fecha</label>
+		                    <!--TODO: COMPROBAR TAMAÑO DE ESTA COLUMNA-->
+		                    <div class="col-lg-2"> 
+		                      <input type="date" class="form-control" id="inputFecha" placeholder="DD/MM/AAAA">
+		                    </div>
+		                </div>
+		                <!--FECHA-->
+		                <div id="divFirmas" class="form-group">
+		                    <label for="inputFirmas" class="col-lg-3 control-label">Objetivo Firmas</label>
+		                    <div class="col-lg-5">
+		                      <input type="number" class="form-control" id="inputFirmas" placeholder="Objetivo Firmas">
+		                    </div>
+		                </div>
+		                <!--TODO: TEXTAEREA: Buscar en w3schools.com -->
+		                
+	  				</fieldset>
+	  			</form>
+		  	</div>
+		</div>
 
-	<script src="//code.jquery.com/jquery.js"></script>
-	<script src="bootstrap-3.0.0/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="login-registro.js"></script>
 
-	<script type="text/javascript">
-		window.onload = function(){
-			rellenaCabecera();
-		}
-	</script>
+		<script src="//code.jquery.com/jquery.js"></script>
+		<script src="bootstrap-3.0.0/js/bootstrap.min.js"></script>
 
+		<script type="text/javascript">
+			window.onload = function(){
+				rellenaCabecera();
+			}
+		</script>
 	</body>
 </html>

@@ -7,6 +7,7 @@
                 '<li><a href="javascript:showLoginLightbox()">Login</a></li>'+
                 '<li><a href="javascript:showLightbox();">Registrarse</a></li>'
             } else {
+            	// TODO: AÑADIR EL LINK PARA CREAR PETICIÓN
                 if(document.getElementById('nombreConectado') == undefined){
                     nombreUserReq(localStorage["login"])
                     document.getElementById('listaCabecera').innerHTML=
@@ -349,4 +350,20 @@
 	   			if(mensaje.value == "NO")
 	   				showRegistroEmailError();
 	   	}
+
+	   	/* CREAR PETICION */
+
+	   	// LightBox para mostrar y ocultar la petición 
+	   	function showCrearPeticion() {
+	   		// Muestra lightbox.
+	    	document.getElementById('overLogin').style.display='block';
+	    	document.getElementById('fadeLogin').style.display='block';
+	   	}
+
+	   	function hideCrearPetición() {
+	   		// Oculta lightbox
+	   		document.getElementById('overPeticion').style.display='none';
+	        document.getElementById('fadePeticion').style.display='none';
+	   	}
+
 
