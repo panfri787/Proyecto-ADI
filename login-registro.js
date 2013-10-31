@@ -7,11 +7,10 @@
                 '<li><a href="javascript:showLoginLightbox()">Login</a></li>'+
                 '<li><a href="javascript:showLightbox();">Registrarse</a></li>'
             } else {
-            	// TODO: AÑADIR EL LINK PARA CREAR PETICIÓN
                 if(document.getElementById('nombreConectado') == undefined){
                     nombreUserReq(localStorage["login"])
                     document.getElementById('listaCabecera').innerHTML=
-                    '<li> <a href="#">Crear petición</a> </li>'+
+                    '<li> <a data-toggle="modal" data-target="#overPeticion">Crear petición</a> </li>'+
                     '<li class="dropdown">'+
                     '<a class="dropdown-toggle" data-toggle="dropdown" id="nombreConectado" href="#"></a>'
                     +'<ul class="dropdown-menu">'+
