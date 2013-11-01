@@ -418,41 +418,6 @@
 	        document.getElementById('fadePeticion').style.display='none';
 	   	}
 
-
-	   	/* FIRMAR PETICION */
-
-	   	// Funcion que muestra el form para realizar las firmas
-		var mostrarPanelFirmas = function() {
-			if(localStorage.login === undefined) {
-				document.getElementById('panelFirmas').style.visibility="hidden";
-			}
-			else {
-	            document.getElementById('firmarHidden').style.visibility = "hidden"
-	            document.getElementById('panelFirmas').style.visibility = "visible"
-	            document.getElementById('mensajeErrorCheck').style.visibility = "hidden"
-			}
-		}
-
-		document.getElementById("botonFirmar").onclick = function() {
-			console.log("ola k ase")
-			if(document.getElementById("aceptado").checked == true)
-			{
-				document.getElementById("mensajeErrorCheck").style.visibility = "hidden"
-				//Que la firma no este vacia
-				if(document.getElementById("motivosArea").value == "")
-				{
-					document.getElementById("ayudaFirma").value = "Debes explicar un motivo para firmar la peticion"
-				}
-				else
-				{
-
-				}
-			}
-			else {
-				document.getElementById("mensajeErrorCheck").style.visibility = "visible"
-			}
-
-		}
 		
 
 

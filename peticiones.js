@@ -56,3 +56,46 @@ var mostrarPeticion = function() {
 	var peticion = JSON.parse(req.responseText)
 	window.location = 'peticion?id='+peticion.id
 }
+
+/* FIRMAR PETICION */
+
+// Funcion que muestra el form para realizar las firmas
+var mostrarPanelFirmas = function() {
+	if(localStorage.login === undefined) {
+		document.getElementById('panelFirmas').style.visibility="hidden";
+	}
+	else {
+        document.getElementById('firmarHidden').style.visibility = "hidden"
+        document.getElementById('panelFirmas').style.visibility = "visible"
+        document.getElementById('mensajeErrorCheck').style.visibility = "hidden"
+        document.getElementById('mensajeErrorMotivo').style.visibility = "hidden"
+	}
+}
+
+// TODO: CAMBIAR LOS ELEMENTOS DE ERROS QUE ESTAN HECHOS EN PLAN CHAPUZA
+document.getElementById("botonFirmar").onclick = function() {
+	// TODO: VOLVER A LEER EL ENUNCIADO
+	if(document.getElementById("aceptado").checked == true)
+	{
+		document.getElementById("mensajeErrorCheck").style.visibility = "hidden"
+		//Que la firma no este vacia
+		if(document.getElementById("motivosArea").value == "")
+		{
+			document.getElementById('mensajeErrorMotivo').style.visibility = "visible"
+		}
+		else
+		{
+			document.getElementById('mensajeErrorMotivo').style.visibility = "hidden"
+			document.getElementById("mensajeErrorCheck").style.visibility = "hidden"
+			//Empiezo a realizar la peticion
+			var firma = new Object();
+			firma.publica = true;
+			firma.comentario = document
+
+		}
+	}
+	else {
+		document.getElementById("mensajeErrorCheck").style.visibility = "visible"
+	}
+
+}

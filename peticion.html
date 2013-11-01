@@ -60,12 +60,13 @@
                       <div class="col-lg-8">
                         <textarea id="motivosArea" class="form-control" rows="3" id="textComentario" style="margin: 0px -6.84375px 0px 0px; width: 378px; height: 85px;"></textarea>
                         <span id="ayudaFirma" class="help-block">Explicanos tus motivos para firmar esta petición.</span>
+                        <p id="mensajeErrorMotivo" class="text-danger">Debes explicar el motivo</p>
                       </div>
                   </div>
                     <div class="form-group">
                       <div class="col-lg-9 col-lg-offset-3">
+                        <p id="mensajeErrorCheck" class="text-danger">Debes aceptar</p>
                         <div class="checkbox">
-                          <p id="mensajeErrorCheck" class="text-danger">Debes aceptar</p>
                           <label>
                             <input id="aceptado" type="checkbox">  Acepto que mi firma se muestre publicamente.
                           </label>
@@ -336,6 +337,9 @@
 
     <script type="text/javascript">
       window.onload = function(){
+        {{#peticion}}
+          id_peticion = {{id}}
+        {{/peticion}}
         rellenaCabecera();
         mostrarPanelFirmas();      
       }
