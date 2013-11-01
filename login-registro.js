@@ -8,7 +8,6 @@
                 '<li><a href="javascript:showLightbox();">Registrarse</a></li>'
             } else {
                 if(document.getElementById('nombreConectado') == undefined){
-                    nombreUserReq(localStorage["login"])
                     document.getElementById('listaCabecera').innerHTML=
                     '<li> <a data-toggle="modal" data-target="#overPeticion">Crear petición</a> </li>'+
                     '<li class="dropdown">'+
@@ -208,7 +207,7 @@
 	  			showRegistroAlert400();
 	  		}
 	    }
-
+	    /*Lógica del registro*/
 	    var callbackRegistro = function() {
 	    	// Estado 4 -> !Completado!
 	    	if(req.readyState == 4) { 
@@ -265,8 +264,17 @@
 	    }
 
 	    document.getElementById("inputEmail").onfocus = function() {
+	    	// Compruebo uno a uno
+	    	if(document.getElementById("inputNombre").value == "")
+	    	{
+	    		document.getElementById("divNombre").className += " has-warning"
+	    	}
+	    	else if(document.getElementById("inputApellidos").value == "")
+	    	{
+	    		document.getElementById("divApellidos").className += " has-warning"
+	    	}
     		// Compruebo los 2 label anteriores
-	    	if(document.getElementById("inputApellidos").value == "" &&
+	    	else if(document.getElementById("inputApellidos").value == "" &&
 	    		document.getElementById("inputNombre").value == "") 
 	    	{
 	    		document.getElementById("divApellidos").className += " has-warning"
@@ -409,5 +417,44 @@
 	   		document.getElementById('overPeticion').style.display='none';
 	        document.getElementById('fadePeticion').style.display='none';
 	   	}
+
+
+	   	/* FIRMAR PETICION */
+
+	   	// Funcion que muestra el form para realizar las firmas
+		var mostrarPanelFirmas = function() {
+			if(localStorage.login === undefined) {
+				document.getElementById('panelFirmas').style.visibility="hidden";
+			}
+			else {
+	            document.getElementById('firmarHidden').style.visibility = "hidden"
+	            document.getElementById('panelFirmas').style.visibility = "visible"
+	            document.getElementById('mensajeErrorCheck').style.visibility = "hidden"
+			}
+		}
+
+		document.getElementById("botonFirmar").onclick = function() {
+			console.log("ola k ase")
+			if(document.getElementById("aceptado").checked == true)
+			{
+				document.getElementById("mensajeErrorCheck").style.visibility = "hidden"
+				//Que la firma no este vacia
+				if(document.getElementById("motivosArea").value == "")
+				{
+					document.getElementById("ayudaFirma").value = "Debes explicar un motivo para firmar la peticion"
+				}
+				else
+				{
+
+				}
+			}
+			else {
+				document.getElementById("mensajeErrorCheck").style.visibility = "visible"
+			}
+
+		}
+		
+
+
 
 
