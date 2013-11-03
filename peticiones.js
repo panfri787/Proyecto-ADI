@@ -18,28 +18,46 @@ document.getElementById('btn-enviar-peticion').onclick = function(){
 		req.onreadystatechange = peticionEnviada
 		req.send(JSON.stringify(peticion))
 	} else {
-		console.log('TODO: CONTROLAR CAMPOS VACIOS')
+		showAlertDanger("Hay campos sin rellenar.")
 	}
 }
+
+var showAlertDanger = function(mensaje){
+	var alert = document.getElementById('alert-crearPeticion');
+	alert.innerHTML = '<button id="close-alert-crearPeticion" type="button" class="close">x</button>'
+	alert.innerHTML += "<strong>Error:</strong> "+mensaje
+	alert.style.display = "block"
+	document.getElementById('close-alert-crearPeticion').onclick = function(){
+		alert.style.display = "none"
+	}
+}
+
+/*var alert = document.getElementById('alert-peticionCreada');
+	alert.innerHTML = '<button id="close-alert-peticionCreada" type="button" class="close">x</button>'+
+					  'Petición creada correctamente';
+	alert.style.display = "block"
+	document.getElementById('close-alert-peticionCreada').onclick = function(){
+		alert.style.display = "none"
+	}
+}*/
 
 var peticionEnviada = function(){
 	if(req.readyState == 4){
 		switch(req.status){
 			case 201:
 				mostrarPeticionReq(req.getResponseHeader('Location'))
-				console.log('Peticion creada correctamente')
 				break;
 
 			case 400:
-				console.log('Campos no validos')
+				showAlertDanger('Alguno de los campos no es correcto.')
 				break;
 
 			case 403:
-				console.log('Error autentificacion')
+				showAlertDanger('No esta autentificado en la aplicación.')
 				break;
 
 			case 500:
-				console.log('Error servidor')
+				showAlertDanger('Se ha producido un error en el servidor, intentelo mas tarde.')
 				break;
 		}
 	}
@@ -55,6 +73,7 @@ var mostrarPeticionReq = function(url) {
 var mostrarPeticion = function() {
 	var peticion = JSON.parse(req.responseText)
 	window.location = 'peticion?id='+peticion.id
+	//showAlertSuccess()
 }
 
 /* FIRMAR PETICION */
