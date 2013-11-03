@@ -32,12 +32,20 @@ var showAlertDanger = function(mensaje){
 	}
 }
 
+/*var alert = document.getElementById('alert-peticionCreada');
+	alert.innerHTML = '<button id="close-alert-peticionCreada" type="button" class="close">x</button>'+
+					  'Petición creada correctamente';
+	alert.style.display = "block"
+	document.getElementById('close-alert-peticionCreada').onclick = function(){
+		alert.style.display = "none"
+	}
+}*/
+
 var peticionEnviada = function(){
 	if(req.readyState == 4){
 		switch(req.status){
 			case 201:
 				mostrarPeticionReq(req.getResponseHeader('Location'))
-				console.log('Peticion creada correctamente')
 				break;
 
 			case 400:
@@ -65,6 +73,7 @@ var mostrarPeticionReq = function(url) {
 var mostrarPeticion = function() {
 	var peticion = JSON.parse(req.responseText)
 	window.location = 'peticion?id='+peticion.id
+	//showAlertSuccess()
 }
 
 /* FIRMAR PETICION */

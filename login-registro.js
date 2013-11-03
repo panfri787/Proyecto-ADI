@@ -16,6 +16,7 @@
                     '<li><a href=usuario?login='+localStorage["login"]+'>Mi perfil</a></li>'+
                     '<li><a href="javascript:logout()">Logout</a></li>'+
                     '</li>'
+                    nombreUserReq(localStorage["login"])
                 }
             }
 		}
