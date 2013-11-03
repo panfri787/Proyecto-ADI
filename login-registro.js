@@ -8,7 +8,6 @@
                 '<li><a href="javascript:showLightbox();">Registrarse</a></li>'
             } else {
                 if(document.getElementById('nombreConectado') == undefined){
-                    nombreUserReq(localStorage["login"])
                     document.getElementById('listaCabecera').innerHTML=
                     '<li> <a data-toggle="modal" data-target="#overPeticion">Crear petición</a> </li>'+
                     '<li class="dropdown">'+
@@ -208,15 +207,15 @@
 	  			showRegistroAlert400();
 	  		}
 	    }
-
+	    /*Lógica del registro*/
 	    var callbackRegistro = function() {
 	    	// Estado 4 -> !Completado!
 	    	if(req.readyState == 4) { 
 	    		if(req.status == 201) {
-	    			console.log("registrado")
+	    			localStorage.login = document.getElementById('inputLogin').value;
+	    			hideRegistroLightbox();
 	    			showRegistroAlert201();
-	    			// Carga las cabeceras
-	    			nombreUserReq(email)
+	    			window.onload();
 	    		}
 	    		else {
 	    			//Error de que no se han procesado bien los datos
@@ -265,8 +264,17 @@
 	    }
 
 	    document.getElementById("inputEmail").onfocus = function() {
+	    	// Compruebo uno a uno
+	    	if(document.getElementById("inputNombre").value == "")
+	    	{
+	    		document.getElementById("divNombre").className += " has-warning"
+	    	}
+	    	else if(document.getElementById("inputApellidos").value == "")
+	    	{
+	    		document.getElementById("divApellidos").className += " has-warning"
+	    	}
     		// Compruebo los 2 label anteriores
-	    	if(document.getElementById("inputApellidos").value == "" &&
+	    	else if(document.getElementById("inputApellidos").value == "" &&
 	    		document.getElementById("inputNombre").value == "") 
 	    	{
 	    		document.getElementById("divApellidos").className += " has-warning"
@@ -409,5 +417,9 @@
 	   		document.getElementById('overPeticion').style.display='none';
 	        document.getElementById('fadePeticion').style.display='none';
 	   	}
+
+		
+
+
 
 

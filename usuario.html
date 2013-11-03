@@ -158,7 +158,6 @@
       </div>
     </div>
     <div id="fadeLogin" class="fadebox">&nbsp;</div>
-
     <div id="over" class="overboxregistro">
             <div class="contentLightbox">
                 <form class="form-horizontal">
@@ -166,47 +165,71 @@
                         <legend>
                             Registrarse
                         </legend>
-                        <div class="form-group">
+                        <div id="divNombre" class="form-group">
                             <label for="inputNombre" class="col-lg-3 control-label">Nombre</label>
                             <div class="col-lg-5">
                               <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div id="divApellidos" class="form-group">
                             <label for="inputApellidos" class="col-lg-3 control-label">Apellidos</label>
                             <div class="col-lg-5">
                               <input type="text" class="form-control" id="inputApellidos" placeholder="Apellidos">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div id="divEmail" class="form-group">
                             <label for="inputEmail" class="col-lg-3 control-label">Email</label>
                             <div class="col-lg-5">
                               <input type="text" class="form-control" id="inputEmail" placeholder="Email">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="inputDate" class="col-lg-3 control-label">Fecha de nacimiento</label>
+                        <div id="divRePassword" class="form-group">
+                            <label for="inputRePassword" class="col-lg-3 control-label">Password</label>
                             <div class="col-lg-5">
-                              <input type="text" class="form-control" id="inputDate" placeholder="Fecha de Naciemiento">
+                              <input type="password" class="form-control"  id="inputRePassword" placeholder="Password">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-lg-5 col-lg-offset-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox">  Acepto las condiciones.
-                                    </label>
-                                </div>
+                        <div id="divRePassword2" class="form-group">
+                            <label for="inputRePassword2" class="col-lg-3 control-label">Repite Password</label>
+                            <div class="col-lg-5">
+                              <input type="password" class="form-control"  id="inputRePassword2" placeholder="Repite Password">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-lg-9 col-lg-offset-3">
-                                <input id="botonRegistro" type="submit" class="btn btn-primary"> 
+                                <input id="botonRegistro" type="button" value="Enviar" class="btn btn-primary">
                             </div>
                         </div>
                     </fieldset>
                 </form>
-                <a href="javascript:hideLightbox();">Cerrar LightBox</a>
+                <a href="javascript:hideRegistroLightbox();">Cerrar LightBox</a>
+            </div>
+            <div id="alertRegistro400" class="alertRegistro">
+                <div class="alert alert-dismissable alert-danger">
+                    <button id="closeRegistroAlert400" type="button" class="close">×</button>
+                    Hay campos obligatorios vacios.
+                </div>
+            </div>
+            
+            <div id="alertRegistroWarning" class="alertRegistro">
+                <div class="alert alert-dismissable alert-warning">
+                    <button id="closeRegistroWarning" type="button" class="close">x</button>
+                    La contraseña debe coincidir
+                </div>
+            </div>
+
+            <div id="alertRegistroErrorBD" class="alertRegistro">
+                <div class="alert alert-dismissable alert-danger">
+                    <button id="closeRegistroErrorBD" type="button" class="close">x</button>
+                    Error al enviar la petición al servidor
+                </div>
+            </div>
+
+            <div id="alertRegistroErrorEmail" class="alertRegistro">
+                <div class="alert alert-dismissable alert-warning">
+                    <button id="closeRegistroErrorEmail" type="button" class="close">x</button>
+                    El email ya está en uso
+                </div>
             </div>
         </div>
     <div id="fade" class="fadebox">&nbsp;</div>
@@ -216,6 +239,12 @@
             <button id="closeAlert200" type="button" class="close">×</button>
             Login realizado correctamente.
         </div>
+    </div>
+
+    <div id="alertRegistro201" class="alertLogin">
+            <div class="alert alert-dismissable alert-success">
+                <button id="closeRegistroAlert201" type="button" class="close">x</button>
+                Usuario registrado correctamente
     </div>
 
     <script type="text/javascript" src="login-registro.js"></script>
