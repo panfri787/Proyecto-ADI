@@ -62,40 +62,113 @@ var mostrarPeticion = function() {
 // Funcion que muestra el form para realizar las firmas
 var mostrarPanelFirmas = function() {
 	if(localStorage.login === undefined) {
-		document.getElementById('panelFirmas').style.visibility="hidden";
+		document.getElementById('panelFirmas').innerHTML =
+		'<fieldset><legend>Firma esta petición</legend>'+
+		'<div class="form-group"><label for="inputNombre" class="col-lg-3 control-label">Nombre</label>'+
+		'<div class="col-lg-9"><input type="text" class="form-control" id="inputNombre" placeholder="Nombre"></div></div>'+
+        '<div class="form-group"><label for="inputApellidos" class="col-lg-3 control-label">Apellidos</label>'+
+        '<div class="col-lg-9"><input type="text" class="form-control" id="inputApellidos" placeholder="Apellidos"></div></div>'+
+        '<div class="form-group"><label for="inputEmail" class="col-lg-3 control-label">Email</label>'+
+        '<div class="col-lg-9"><input type="text" class="form-control" id="inputEmail" placeholder="Email"></div></div>'+
+        '<div class="form-group"><label for="textComentario" class="col-lg-3 control-label">Comentario</label>'+
+        '<div class="col-lg-8"><textarea id="motivosArea" class="form-control" rows="3" id="textComentario" style="margin: 0px -6.84375px 0px 0px; width: 378px; height: 85px;"></textarea>'+
+        '<span id="ayudaFirma" class="help-block">Explicanos tus motivos para firmar esta petición.</span></div></div>'+
+        '<div class="form-group"><div class="col-lg-9 col-lg-offset-3"><div class="checkbox">'+
+		'<label><input id="aceptado" type="checkbox">  Acepto que mi firma se muestre publicamente.</label></div></div></div>'+
+        '</fieldset>'
 	}
 	else {
-        document.getElementById('firmarHidden').style.visibility = "hidden"
-        document.getElementById('panelFirmas').style.visibility = "visible"
-        document.getElementById('mensajeErrorCheck').style.visibility = "hidden"
-        document.getElementById('mensajeErrorMotivo').style.visibility = "hidden"
+       	document.getElementById('panelFirmas').innerHTML = 
+       	'<fieldset><legend>Firma esta petición</legend>'+
+		'<div class="form-group"><label for="textComentario" class="col-lg-3 control-label">Comentario</label>'+
+        '<div class="col-lg-8"><textarea id="motivosArea" class="form-control" rows="3" id="textComentario" style="margin: 0px -6.84375px 0px 0px; width: 378px; height: 85px;"></textarea>'+
+        '<span id="ayudaFirma" class="help-block">Explicanos tus motivos para firmar esta petición.</span></div></div>'+
+        '<div class="form-group"><div class="col-lg-9 col-lg-offset-3"><div class="checkbox">'+
+		'<label><input id="aceptado" type="checkbox">  Acepto que mi firma se muestre publicamente.</label></div></div></div>'+
+        '</fieldset>'
 	}
 }
 
-// TODO: CAMBIAR LOS ELEMENTOS DE ERROS QUE ESTAN HECHOS EN PLAN CHAPUZA
 document.getElementById("botonFirmar").onclick = function() {
-	// TODO: VOLVER A LEER EL ENUNCIADO
-	if(document.getElementById("aceptado").checked == true)
-	{
-		document.getElementById("mensajeErrorCheck").style.visibility = "hidden"
-		//Que la firma no este vacia
-		if(document.getElementById("motivosArea").value == "")
-		{
-			document.getElementById('mensajeErrorMotivo').style.visibility = "visible"
-		}
-		else
-		{
-			document.getElementById('mensajeErrorMotivo').style.visibility = "hidden"
-			document.getElementById("mensajeErrorCheck").style.visibility = "hidden"
-			//Empiezo a realizar la peticion
-			var firma = new Object();
+	// TODO: REALIZAR COMPROBACION DE QUE LOS CAMPOS NO SEAN VACIOS
+	if(document.getElementById('motivosArea').value != "") {
+		var firma = new Object();
+		if(document.getElementById('aceptado').checked == true) {
 			firma.publica = true;
-			firma.comentario = document
-
 		}
+		else {
+			firma.publica = false;
+		}
+		// Comentario sobre la firma
+		firma.comentario = document.getElementById('motivosArea').value;
+		// Si no estamos logueados añado (nombre, apellidos, email)
+		if(localStorage.login === undefined) {
+			firma.nombre = document.getElementById('inputNombre').value;
+			firma.apellidos = document.getElementById('inputApellidos').value;
+			firma.email = document.getElementById('inputEmail').value;
+		}
+		else {
+			// Obtengo el nombre del usuario que crea la peticion
+			var usuario = new Object();
+			obtenerNombre(usuario);
+			firma.nombre = usuario.nombre;
+			firma.apellidos = usuario.apellidos;
+			firma.email = usuario.email;
+		}
+
+		req = new XMLHttpRequest();
+		req.open('POST','api/peticiones/' + id_peticion + '/firmas/',true);
+		// Indicamos al servidor que le llegan datos en formato JSON
+		req.setRequestHeader("Content-type", "application/json")
+		req.onreadystatechange = enviarFirma;
+		req.send(JSON.stringify(firma));
 	}
 	else {
-		document.getElementById("mensajeErrorCheck").style.visibility = "visible"
+		// TODO: COMPROBAR OTROS CAMPOS
 	}
-
 }
+
+var obtenerNombre = function(usuario) {
+	req = new XMLHttpRequest();
+	req.open('GET', 'api/usuarios/'+ localStorage.login, true);
+	req.onreadystatechange = callbackNombre(usuario);
+	req.send()
+}
+
+var callbackNombre = function(usuario) {
+	if(req.readyState == 4) {
+		if(req.status == 200) {
+			usuario = JSON.parse(req.responseText);
+		}
+	}
+}	
+
+var enviarFirma = function() {
+	if(req.readyState == 4){
+		switch(req.status){
+			case 201:
+				console.log("Firmada la peticion")
+				//mostrarPeticionReq(req.getResponseHeader('Location'))
+				window.location = "index"
+				break;
+			case 400:
+				console.log('Campos no validos')
+				break;
+			case 500:
+				console.log('Error servidor')
+				break;
+		}
+	}
+}
+/*
+var mostrarFirmaReq = function(url) {
+	req = new XMLHttpRequest()
+	req.open('GET', url, false)
+	req.onreadystatechange = mostrarFirma
+	req.send()
+}
+
+var mostrarFirma = function() {
+
+}*/
+ 
