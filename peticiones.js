@@ -128,13 +128,13 @@ document.getElementById("botonFirmar").onclick = function() {
 		}
 		else {
 			// Obtengo el nombre del usuario que crea la peticion
-			var usuario = new Object();
-			obtenerNombre(usuario);
-			firma.nombre = usuario.nombre;
-			firma.apellidos = usuario.apellidos;
-			firma.email = usuario.email;
+			req2 = new XMLHttpRequest();
+			req2.open('GET', 'api/usuarios/' + localStorage['login'], true);
+			req2.onreadystatechange = function(){
+				obtenerNombre(firma)
+			}
+			req2.send();			
 		}
-
 		req = new XMLHttpRequest();
 		req.open('POST','api/peticiones/' + id_peticion + '/firmas/',true);
 		// Indicamos al servidor que le llegan datos en formato JSON
@@ -142,33 +142,25 @@ document.getElementById("botonFirmar").onclick = function() {
 		req.onreadystatechange = enviarFirma;
 		req.send(JSON.stringify(firma));
 	}
-	else {
-		// TODO: COMPROBAR OTROS CAMPOS
-	}
 }
 
-var obtenerNombre = function(usuario) {
-	req = new XMLHttpRequest();
-	req.open('GET', 'api/usuarios/'+ localStorage.login, true);
-	req.onreadystatechange = callbackNombre(usuario);
-	req.send()
-}
-
-var callbackNombre = function(usuario) {
-	if(req.readyState == 4) {
-		if(req.status == 200) {
-			usuario = JSON.parse(req.responseText);
+var obtenerNombre = function(firma) {
+	if(req2.readyState == 4){
+		if(req2.status == 200){
+			var usuario = JSON.parse(req2.responseText)
+			firma.nombre = usuario.nombre;
+			firma.apellidos = usuario.apellidos;
+			firma.email = usuario.email;
 		}
 	}
-}	
+}
 
 var enviarFirma = function() {
 	if(req.readyState == 4){
 		switch(req.status){
 			case 201:
-				console.log("Firmada la peticion")
-				//mostrarPeticionReq(req.getResponseHeader('Location'))
-				window.location = "index"
+				console.log("Firma aceptada" + req.getResponseHeader('Location'))
+				mostrarFirmaReq(req.getResponseHeader('Location'))
 				break;
 			case 400:
 				console.log('Campos no validos')
@@ -184,11 +176,17 @@ var mostrarFirmaReq = function(url) {
 	req = new XMLHttpRequest()
 	req.open('GET', url, false)
 	//Callback
-	req.onreadystatechange = mostrarFirma
+	req.onreadystatechange = mostrarFirmaID
 	req.send()
 }
 
-var mostrarFirma = function() {
-
+var mostrarFirmaID = function() {
+	if(req.readyState == 4) {
+		if(req.status == 200) {
+			var firmaURL = JSON.parse(req.responseText)
+			console.log("ID de la firma: " + firmaURL.id);
+			window.location = 'api/peticiones/' + id_peticion + "/firmas/" + firmaURL.id;
+		}
+	}
 }
  
