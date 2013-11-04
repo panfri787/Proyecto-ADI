@@ -108,10 +108,12 @@ var mostrarPanelFirmas = function() {
 	}
 }
 
+// Evento para enviar la firma de la petición
 document.getElementById("botonFirmar").onclick = function() {
-	// TODO: REALIZAR COMPROBACION DE QUE LOS CAMPOS NO SEAN VACIOS
+	
 	if(document.getElementById('motivosArea').value != "") {
 		var firma = new Object();
+		// Si la queremos como firma pública
 		if(document.getElementById('aceptado').checked == true) {
 			firma.publica = true;
 		}
@@ -144,6 +146,7 @@ document.getElementById("botonFirmar").onclick = function() {
 	}
 }
 
+// Obtiene el nombre si ya estamos logueados para enviar junto con la firma
 var obtenerNombre = function(firma) {
 	if(req2.readyState == 4){
 		if(req2.status == 200){
@@ -155,6 +158,7 @@ var obtenerNombre = function(firma) {
 	}
 }
 
+// Callback de enviar la firma con las diferentes respuestas
 var enviarFirma = function() {
 	if(req.readyState == 4){
 		switch(req.status){
@@ -172,6 +176,7 @@ var enviarFirma = function() {
 	}
 }
 
+// Hace la peticion al servidor para que nos devuelva el id y construir el enlace
 var mostrarFirmaReq = function(url) {
 	req = new XMLHttpRequest()
 	req.open('GET', url, false)
@@ -180,6 +185,7 @@ var mostrarFirmaReq = function(url) {
 	req.send()
 }
 
+// Callback para obtener el ID
 var mostrarFirmaID = function() {
 	if(req.readyState == 4) {
 		if(req.status == 200) {
