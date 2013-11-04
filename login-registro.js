@@ -1,6 +1,6 @@
 		
 
-		//Funcion que rellena la barra de navegacion de la pagina.
+		//Funcion que rellena la barra de navegacion de la pagina, segun el usuario este logeado o no.
 		var rellenaCabecera = function(){
 			if(localStorage.login === undefined){
                 document.getElementById('listaCabecera').innerHTML=
@@ -21,7 +21,7 @@
             }
 		}
 
-		//Muestran nombre en la cabecera
+		//Muestra el nombre del usuario logueado en la cabecera.
 		var insertaNombre = function(){
 			if(req.readyState == 4){
 				if(req.status == 200){
@@ -32,6 +32,7 @@
 			}
 		}
 
+		//Peticion GET de los datos del usuario logueado para obtener su nombre e insertarlo en la cabecera de la pagina.
 		var nombreUserReq = function(login) {
 			req = new XMLHttpRequest();
 			req.open('GET', 'api/usuarios/'+login, true)
@@ -39,11 +40,13 @@
 			req.send()
 		}		
 
+		//Desloguea al usuario actualmente logueado y redirige a la pagina principal.
 		function logout() {
 			localStorage.removeItem('login');
 			window.location = "index";
 		}
 
+		//Muestra el lightbox para registrar a un nuevo usuario.
 	    function showLightbox() {
 	        document.getElementById('over').style.display='block';
 	        document.getElementById('fade').style.display='block';
@@ -59,10 +62,14 @@
 	    	document.getElementById('divRePassword').className = 'form-group';
 	    	document.getElementById('divRePassword2').className = 'form-group';
 	    }
+
+	    //Oculta el lightbox para registrar a un nuevo usuario.
 	    function hideRegistroLightbox() {
 	        document.getElementById('over').style.display='none';
 	        document.getElementById('fade').style.display='none';
 	    }
+
+	    //Muestra el lightbox para loguearse en la aplicacion.
 	    function showLoginLightbox() {
 	    	//Visualiza lightbox.
 	    	document.getElementById('overLogin').style.display='block';
@@ -73,6 +80,8 @@
 	    	document.getElementById('divLogin1').className = 'form-group';
 	    	document.getElementById('divPassword1').className = 'form-group';
 	    }
+
+	    //Oculta el lightbox para loguearse en la aplicacion.
 	    function hideLoginLightbox() {
 	    	document.getElementById('overLogin').style.display='none';
 	    	document.getElementById('fadeLogin').style.display='none';
@@ -141,6 +150,8 @@
 	    	}
 	    }
 
+	    //Manejador para el boton enviar del lightbox de login.
+	    //Envia una peticion GET al api de login con los datos del formulario.
 	    document.getElementById("botonLogin").onclick=function(){
 	    	var inLogin = document.getElementById('inputLogin')
 	    	var inPass = document.getElementById('inputPassword')
@@ -158,7 +169,8 @@
 	    	}
 	    }
 
-	    /*Logica del login*/
+	    //Callback de la peticion anterior, que añade al localstorage los datos del usuario logueado si
+	    //no se ha producido ningun error o muestra un mensaje de error en su defecto.
 	    var callbackLogin = function(){
 	    	if (req.readyState == 4){
 	    		switch(req.status){
@@ -175,6 +187,8 @@
 	    	}
 	    }
 
+	    //Manejador del boton enviar del lightbox registro, realiza una peticion POST al api registro,
+	    //para registrar un nuevo usuario.
 	    document.getElementById("botonRegistro").onclick = function() {
 	    	var inNombre = document.getElementById('inputNombre')
 	    	var inApellidos = document.getElementById('inputApellidos')
@@ -208,6 +222,7 @@
 	  			showRegistroAlert400();
 	  		}
 	    }
+
 	    /*Lógica del registro*/
 	    var callbackRegistro = function() {
 	    	// Estado 4 -> !Completado!
@@ -225,7 +240,9 @@
 	    	}
 	    }
 
-	    /*Controles del lightbox login*/
+	    //Los siguientes manejadores cambian los colores de los input en el lightbox login,
+	    //si pierden el foco y no tienen nada escrito para alertar al usuario. O los vuelven a
+	    //poner normales si el usuario ha escrito algo.
 	    document.getElementById("inputLogin").onblur = function () {
 	    	if(document.getElementById("inputLogin").value == ""){
 	    		document.getElementById("divLogin1").className += " has-warning"
@@ -250,9 +267,7 @@
 	    	}
 	    }
 
-	    /*Controles del lightbox registro*/
-	    // onBlur == outside
-	    // onFocus == inside
+	    //Semejante a las anteriores funciones pero con los input del lightbox registro.
 	    document.getElementById("inputApellidos").onfocus = function() {
 	    	if(document.getElementById("inputNombre").value == "") 
 	    	{

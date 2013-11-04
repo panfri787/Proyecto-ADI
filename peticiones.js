@@ -1,3 +1,5 @@
+//Manejeador para el boton enviar del lightbox crear peticion.
+//Realiza la peticion POST para crear una peticion, con los datos obtenidos del form.
 document.getElementById('btn-enviar-peticion').onclick = function(){
 	var intitulo = document.getElementById('inputTitulo')
 	var inFecha = document.getElementById('inputFecha')
@@ -22,30 +24,31 @@ document.getElementById('btn-enviar-peticion').onclick = function(){
 	}
 }
 
+//Muestra un mensaje de error durante de 5 segundos.
+//El mensaje es pasado por parametro.
 var showAlertDanger = function(mensaje){
 	var alert = document.getElementById('alert-crearPeticion');
-	alert.innerHTML = '<button id="close-alert-crearPeticion" type="button" class="close">x</button>'
-	alert.innerHTML += "<strong>Error:</strong> "+mensaje
+	alert.innerHTML = "<strong>Error:</strong> "+mensaje
 	alert.style.display = "block"
-	document.getElementById('close-alert-crearPeticion').onclick = function(){
-		alert.style.display = "none"
-	}
+	window.setTimeout(function(){ alert.style.display = "none" }, 5000)
 }
 
-/*var alert = document.getElementById('alert-peticionCreada');
-	alert.innerHTML = '<button id="close-alert-peticionCreada" type="button" class="close">x</button>'+
-					  'Petición creada correctamente';
+//Muestra un mensaje informativo de que la peticion se ha creado correctamente e invoca
+//a la funcion que redirige a la direccion de dicha peticion.
+var peticionCorrecta = function(url){
+	var alert = document.getElementById('alert-peticionCreada');
+	alert.innerHTML = "<strong>Peticion creada correctamente:</strong> espere mientras se le redirige a la misma."
 	alert.style.display = "block"
-	document.getElementById('close-alert-peticionCreada').onclick = function(){
-		alert.style.display = "none"
-	}
-}*/
+	window.setTimeout(function(){mostrarPeticionReq(url)}, 3000)
+}
 
+//Callback de la peticion POST para crear una nueva peticion,
+//realiza determinado comportamiento en funcion del status de la peticion.
 var peticionEnviada = function(){
 	if(req.readyState == 4){
 		switch(req.status){
 			case 201:
-				mostrarPeticionReq(req.getResponseHeader('Location'))
+				peticionCorrecta(req.getResponseHeader('Location'))
 				break;
 
 			case 400:
@@ -63,6 +66,7 @@ var peticionEnviada = function(){
 	}
 }
 
+//Peticion get para obtener el id de la peticion recien creada.
 var mostrarPeticionReq = function(url) {
 	req = new XMLHttpRequest()
 	req.open('GET', url, false)
@@ -70,10 +74,10 @@ var mostrarPeticionReq = function(url) {
 	req.send()
 }
 
+//Callback de la peticion anterior que redirige la pagina de la peticion recien creada.
 var mostrarPeticion = function() {
 	var peticion = JSON.parse(req.responseText)
 	window.location = 'peticion?id='+peticion.id
-	//showAlertSuccess()
 }
 
 /* FIRMAR PETICION */
