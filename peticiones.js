@@ -179,15 +179,16 @@ var enviarFirma = function() {
 		}
 	}
 }
-/*
+
 var mostrarFirmaReq = function(url) {
 	req = new XMLHttpRequest()
 	req.open('GET', url, false)
+	//Callback
 	req.onreadystatechange = mostrarFirma
 	req.send()
 }
 
 var mostrarFirma = function() {
 
-}*/
+}
  
