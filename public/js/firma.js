@@ -5,11 +5,9 @@ var Firma = Backbone.Model.extend({
 		nombre: '',
 		apellidos: '',
 		email: '',
+		comentario: '',
 		publica: false
 	},
-	// url's para hacer las peticiones
-	urlUsuario: "/api/usuarios/",
-	urlFirmar: 'api/peticiones/',
 	toString: function() {
 		var cad = this.get('nombre') + " " + this.get('apellidos') + " " + this.get('email');
 		if(this.get('publica'))
@@ -17,17 +15,10 @@ var Firma = Backbone.Model.extend({
 		else
 			cad += " firma NO PUBLICA";
 	},
-	// Realizar la peticion de insertar la firma en el bbdd
-	firmar: function() {
-		this.save();
-	},
-	marcarComoPublica: function() {
-		this.set('publica', true);
-	},
 	// Si ya estoy logueado obtengo los datos del usuario(nombre, apellidos, email)
 	datosUsuario: function(login) {
 		xhr = new XMLHttpRequest();
-		xhr.open('GET', urlUsuario + login, true);
+		xhr.open('GET', '/api/usuarios/' + login, true);
 		xhr.onreadystatechange = function() {
 			if(this.readyState == 4)
 				if(this.status == 200) {
@@ -39,36 +30,73 @@ var Firma = Backbone.Model.extend({
 		}
 		xhr.send();
 	}
-	// Envia la peticion para realizar la firma
-	enviarFirma: function(idPeticion) {
-		xhr = new XMLHttpRequest();
-		xhr.open('POST', urlFirmar + '/firmas/', true);
-		// Indicamos al servidor que le llegan datos en formato JSON
-		xhr.setRequestHeader("Content-type", "application/json");
-		xhr.onreadystatechange = function() {
-			if(this.readyState == 4) {
-				switch(this.status) {
-					case 201:
-						console.log("Firma aceptada" + this.getResponseHeader('Location'))
-						// TODO: falta realizar la peticion para crear el enlace que lleva a esa firma y hacer un window.onload
-						break;
-					case 400:
-						console.log('Campos no validos')
-						break;
-					case 500:
-						console.log('Error servidor')
-						break;
-				}
-			}
-		}
-		xhr.send(JSON.stringify(this));
-	}
 
 });
 
 // Coleccion de Firma
-var Firmas = Backbone.Collection.extend({
-	// Referencia al modelo
+var FirmaCollection = Backbone.Collection.extend({
 	model: Firma,
-	
+	// url para hacer la peticion
+	urlRoot: function() {
+		return this.document.url() + '/firmas/';
+	}
 });
+
+// Plantilla para mostrar la firma
+var panelFirmas = Backbone.Collection.extend({
+	// Creo el template con mustache
+	template: Mustache.compile('<h1>OLA K ASE</h1>'),
+	render: function() {
+		this.el.innnerHTML = this.template(this.model.toJSON());
+	}
+});
+
+// Vista de la firma en peticion
+var FirmaView = Backbone.View.extend({
+	initialize: function() {
+		this.collection.fetch({reset: true});
+		// TODO: ¿listenTo?
+		this.listenTo(this.collection, "panel", this.render)
+	},
+	el: '#panelFirmas',
+	// Se llama cada vez que haya que dibujar la vista
+	render: function() {
+		console.log("ehhhhh");
+		var pf = new panelFirmas();
+		pf.render();
+	},
+	// Evento que recoge los datos y hace la firma
+	eventoFirmar: function() {
+		console.log("en el evento");
+		// Recojo los valores de los campos
+		if(document.getElementById('motivosArea').value != "") {
+			// Creo una nueva firma
+			var f = new Firma();
+			if(document.getElementById('aceptado').checked == true) {
+				f.set('publica', true);
+			}
+			// Comentario sobre la firma
+			f.set('comentario', document.getElementById('motivosArea').value);
+			// Si no estamos logueados añado (nombre, apellidos, email)
+			if(localStorage.login === undefined) {
+				f.set('nombre', document.getElementById('inputNombre').value);
+				f.set('apellidos', document.getElementById('inputApellidos').value);
+				f.set('email', document.getElementById('inputEmail').value);
+			}
+			// Realizo una peticion al modelo para solicitar los datos del login
+			else {
+				f.datosUsuario(localStorage.login);
+			}
+			// Añado a la coleccion
+			this.collection.add(f);
+			// Guardo mandandolo al servidor
+			f.save();
+		}
+	},
+
+	events: {
+		"click #botonFirmar": "eventoFirmar"
+	}
+});
+
+// TODO ROUTERS

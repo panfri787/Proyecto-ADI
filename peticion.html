@@ -318,17 +318,27 @@
     <script src="//code.jquery.com/jquery.js"></script>
     <script src="public/js/lib/bootstrap-3.0.0/js/bootstrap.min.js"></script>
 
+    <!-- requisito imprescindible para backbone -->
+    <script src="public/js/lib/underscore-min.js"> </script>
+    <!-- compatibilidad con IE antiguos -->
+    <script src="public/js/lib/json2.js"> </script>
+    <!-- RESTful persistence, history support via Backbone.Router and DOM manipulation with Backbone.View -->
+    <script src="public/js/lib/zepto.min.js"> </script>
+    <!-- el propio backbone -->
+    <script src="public/js/lib/backbone-min.js"> </script>
+    <!-- mustache para templating, tirando la casa por la ventana -->
+    <script src="public/js/lib/mustache.js"></script>
+    <script src="public/js/firma.js"></script>
+
     <script type="text/javascript">
       window.onload = function(){
         {{#peticion}}
           id_peticion = {{id}}
         {{/peticion}}
         rellenaCabecera();
-        mostrarPanelFirmas();     
+        //mostrarPanelFirmas();     
       }
     </script>
-
-
 </body>
 
 </html>

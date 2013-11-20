@@ -81,7 +81,7 @@ var mostrarPeticion = function() {
 }
 
 /* FIRMAR PETICION */
-
+/*
 // Funcion que muestra el form para realizar las firmas
 var mostrarPanelFirmas = function() {
 	if(localStorage.login === undefined) {
@@ -199,4 +199,4 @@ var mostrarFirmaID = function() {
 		}
 	}
 }
- 
+*/
