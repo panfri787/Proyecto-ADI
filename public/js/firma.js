@@ -1,6 +1,6 @@
 
 // Modelo
-var Firma = Backbone.Model.extend({
+var FirmaModelo = Backbone.Model.extend({
 	defaults: {
 		nombre: '',
 		apellidos: '',
@@ -31,39 +31,76 @@ var Firma = Backbone.Model.extend({
 		xhr.send();
 	}
 
-});
+})
 
 // Coleccion de Firma
 var FirmaCollection = Backbone.Collection.extend({
-	model: Firma,
+	model: FirmaModelo,
 	// url para hacer la peticion
 	urlRoot: function() {
 		return this.document.url() + '/firmas/';
 	}
-});
+})
 
-// Plantilla para mostrar la firma
-var panelFirmas = Backbone.Collection.extend({
-	// Creo el template con mustache
-	template: Mustache.compile('<h1>OLA K ASE</h1>'),
-	render: function() {
-		this.el.innnerHTML = this.template(this.model.toJSON());
-	}
-});
-
-// Vista de la firma en peticion
+// Vista de la firma
 var FirmaView = Backbone.View.extend({
+	className: "firma", // NI ZORRA PORQUE NO TENGO NINGUNA CLASS ASÍ
+	// Creo el template con mustache, TODO: Comprobar cuando el nombre es NULL poner desconocido
+	template: Mustache.compile('<blockquote><p>{{comentario}}</p><small><b>{{nombre}}</b>{{fecha}}</small></blockquote>'),
+	render: function() {
+		this.ac.innnerHTML = this.template(this.model.toJSON());
+	}
+})
+
+// Vista
+var FirmasView = Backbone.View.extend({
 	initialize: function() {
+		this.collection = new FirmaCollection();
+		_.bindAll(this, "renderPanel");
 		this.collection.fetch({reset: true});
-		// TODO: ¿listenTo?
-		this.listenTo(this.collection, "panel", this.render)
+		this.listenTo(this.collection, "reset", this.render)
 	},
 	el: '#panelFirmas',
+	ac: '#firmasRecientes',
 	// Se llama cada vez que haya que dibujar la vista
 	render: function() {
-		console.log("ehhhhh");
-		var pf = new panelFirmas();
-		pf.render();
+		this.collection.each(this.renderPanel);
+	},
+	// Muestra el panel de firmas
+	renderPanel: function() {
+		// Compruebo si se esta logueado para mostrar unos campos u otros
+		if(localStorage.login === undefined) {
+			document.getElementById('panelFirmas').innerHTML =
+			'<fieldset><legend>Firma esta petición</legend>'+
+			'<div class="form-group"><label for="inputNombre" class="col-lg-3 control-label">Nombre</label>'+
+			'<div class="col-lg-9"><input type="text" class="form-control" id="inputNombre" placeholder="Nombre"></div></div>'+
+	        '<div class="form-group"><label for="inputApellidos" class="col-lg-3 control-label">Apellidos</label>'+
+	        '<div class="col-lg-9"><input type="text" class="form-control" id="inputApellidos" placeholder="Apellidos"></div></div>'+
+	        '<div class="form-group"><label for="inputEmail" class="col-lg-3 control-label">Email</label>'+
+	        '<div class="col-lg-9"><input type="text" class="form-control" id="inputEmail" placeholder="Email"></div></div>'+
+	        '<div class="form-group"><label for="textComentario" class="col-lg-3 control-label">Comentario</label>'+
+	        '<div class="col-lg-8"><textarea id="motivosArea" class="form-control" rows="3" id="textComentario" style="margin: 0px -6.84375px 0px 0px; width: 378px; height: 85px;"></textarea>'+
+	        '<span id="ayudaFirma" class="help-block">Explicanos tus motivos para firmar esta petición.</span></div></div>'+
+	        '<div class="form-group"><div class="col-lg-9 col-lg-offset-3"><div class="checkbox">'+
+			'<label><input id="aceptado" type="checkbox">  Acepto que mi firma se muestre publicamente.</label></div></div></div>'+
+	        '</fieldset>'
+		}
+		else {
+	       	document.getElementById('panelFirmas').innerHTML = 
+	       	'<fieldset><legend>Firma esta petición</legend>'+
+			'<div class="form-group"><label for="textComentario" class="col-lg-3 control-label">Comentario</label>'+
+	        '<div class="col-lg-8"><textarea id="motivosArea" class="form-control" rows="3" id="textComentario" style="margin: 0px -6.84375px 0px 0px; width: 378px; height: 85px;"></textarea>'+
+	        '<span id="ayudaFirma" class="help-block">Explicanos tus motivos para firmar esta petición.</span></div></div>'+
+	        '<div class="form-group"><div class="col-lg-9 col-lg-offset-3"><div class="checkbox">'+
+			'<label><input id="aceptado" type="checkbox">  Acepto que mi firma se muestre publicamente.</label></div></div></div>'+
+	        '</fieldset>'
+		}
+	},
+	// Actualizaré las firmas recientes
+	renderFirma: function(firma) {
+		var firmaView = new FirmaView({model:firma});
+		firmaView.render();
+		this.ac.appendChild(firmaView.ac);
 	},
 	// Evento que recoge los datos y hace la firma
 	eventoFirmar: function() {
@@ -71,7 +108,7 @@ var FirmaView = Backbone.View.extend({
 		// Recojo los valores de los campos
 		if(document.getElementById('motivosArea').value != "") {
 			// Creo una nueva firma
-			var f = new Firma();
+			var f = new FirmaModelo();
 			if(document.getElementById('aceptado').checked == true) {
 				f.set('publica', true);
 			}
@@ -89,14 +126,19 @@ var FirmaView = Backbone.View.extend({
 			}
 			// Añado a la coleccion
 			this.collection.add(f);
-			// Guardo mandandolo al servidor
+			// Guardo
 			f.save();
+			// Actualizo las firmas recientes
+			this.renderFirma(f);
 		}
 	},
-
 	events: {
-		"click #botonFirmar": "eventoFirmar"
+		"click #eventoFirmar": "eventoFirmar"
 	}
-});
+})
 
-// TODO ROUTERS
+var fv;
+window.onload= function() {
+	fv = new FirmasView();
+	console.log("dentro");
+}

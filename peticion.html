@@ -50,11 +50,11 @@
       	<div class="col-lg-6">
           <div class="well">
             <!-- Este form se rellena automaticamente -->
-      			<form id="panelFirmas" class="form-horizontal"></form>
+        		<form id="panelFirmas" class="form-horizontal"></form>
             <form id="panelBoton" class="form-horizontal">
               <div class="form-group">
                 <div class="col-lg-9 col-lg-offset-3">
-                  <input id="botonFirmar" type="button" value="Firmar" class="btn btn-primary">
+                  <input id="eventoFirmar" type="button" value="Firmar" class="btn btn-primary">
                 </div>
               </div>
             </form>
@@ -111,7 +111,7 @@
       			</li>
       		</ul>
       	</div>
-      	<div class="col-lg-6">
+      	<div id="firmasRecientes" class="col-lg-6">
       		<h2 class="text-primary">Firmas recientes</h2>
       		<blockquote>
       			<p>
@@ -325,18 +325,18 @@
     <!-- RESTful persistence, history support via Backbone.Router and DOM manipulation with Backbone.View -->
     <script src="public/js/lib/zepto.min.js"> </script>
     <!-- el propio backbone -->
-    <script src="public/js/lib/backbone-min.js"> </script>
+    <script src="public/js/lib/backbone-min.js"></script>
     <!-- mustache para templating, tirando la casa por la ventana -->
     <script src="public/js/lib/mustache.js"></script>
     <script src="public/js/firma.js"></script>
 
     <script type="text/javascript">
-      window.onload = function(){
+      window.onload = function() {
         {{#peticion}}
           id_peticion = {{id}}
         {{/peticion}}
         rellenaCabecera();
-        //mostrarPanelFirmas();     
+        //mostrarPanelFirmas();
       }
     </script>
 </body>

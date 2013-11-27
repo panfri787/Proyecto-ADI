@@ -161,7 +161,7 @@ var obtenerNombre = function(firma) {
 		}
 	}
 }
-
+*/
 // Callback de enviar la firma con las diferentes respuestas
 var enviarFirma = function() {
 	if(req.readyState == 4){
@@ -199,4 +199,3 @@ var mostrarFirmaID = function() {
 		}
 	}
 }
-*/

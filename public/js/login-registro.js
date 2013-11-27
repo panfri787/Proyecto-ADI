@@ -210,7 +210,7 @@
 	  			usuario.rol = 'registrado';
 	  			req = new XMLHttpRequest();
 	  			// URL: api/usuarios
-	  			// true == asincrona
+	  			// true == asincronaon
 	  			req.open('POST', 'api/usuarios', true);
 	  			// Indicamos al servidor que le llegan datos en formato JSON
 		    	req.setRequestHeader("Content-type", "application/json")
