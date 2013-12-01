@@ -13,7 +13,9 @@ var Actualizaciones = Backbone.Collection.extend({
 
 var ActualizacionView = Backbone.View.extend({
 	template: Mustache.compile('<li class="list-group-item">'+
-							   		'<span class="badge">'+'{{fecha}}'+'</span>'+'{{contenido}}'+
+							   		'<span class="badge">'+'{{fecha}}'+'</span>'+'{{contenido}}<br>'+
+							   		'<input type="button" class="btn btn-primary btn-xs btn-modificar" value="Modificar"> '+
+							   		'<input type="button" class="btn btn-danger btn-xs btn-borrar" value="Borrar">'+
 							   '</li>'),
 	render: function(){
 		this.el.innerHTML = this.template(this.model.toJSON())
@@ -31,9 +33,8 @@ var ActualizacionesView = Backbone.View.extend({
 	el: "#actualizaciones",
 
 	render: function(){
-		this.el.innerHTML='<h2 class="text-primary">Actualizaciones</h2>'
-      	this.el.innerHTML+='<ul class="list-group">'
       	this.collection.each(this.renderActualizacion)
+      	this.el.innerHTML+='<br><input type="button" class="btn btn-primary" value="Añadir Actualizacion">';
 	},
 
 	renderActualizacion : function(actu){
