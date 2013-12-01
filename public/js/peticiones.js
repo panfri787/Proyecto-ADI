@@ -199,3 +199,11 @@ var mostrarFirmaID = function() {
 		}
 	}
 }
+
+var esAutorDePeticion = function(email){
+	if(localStorage.getItem("login")==email){
+		return true
+	} else {
+		return false
+	}
+}

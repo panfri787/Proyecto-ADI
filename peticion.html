@@ -84,6 +84,7 @@
 	  				<p>
               <span class="col-lg-9">
                 <a href="/muevete/usuario?login={{peticion.creador.login}}">{{peticion.creador.nombre}} {{peticion.creador.apellidos}}</a>
+                <p style="visibility:hidden;" id="email_autor">{{peticion.creador.login}}</p>
               </span>
               <span class="col-lg-1">
                 <a href="/muevete/usuario?login={{peticion.creador.login}}"> <img width="70" alt="#" src="img/perfiles/{{peticion.creador.login}}.jpg"> </a>
@@ -339,7 +340,9 @@
         {{/peticion}}
         rellenaCabecera();
         //mostrarPanelFirmas();
-        vistaActualizaciones = new ActualizacionesView({id: id_peticion})
+        autor_peticion = document.getElementById("email_autor").innerHTML
+        var esAutor = esAutorDePeticion(autor_peticion)
+        vistaActualizaciones = new ActualizacionesView({id: id_peticion, creador: esAutor})
       }
     </script>
 </body>

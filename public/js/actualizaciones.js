@@ -4,6 +4,7 @@ var Actualizaciones = Backbone.Collection.extend({
 	model: ActualizacionModel,
 	initialize: function(options){
 		this.id = options.id
+		this.creador = options.creador
 	},
 
 	url: function(){
@@ -12,19 +13,29 @@ var Actualizaciones = Backbone.Collection.extend({
 });
 
 var ActualizacionView = Backbone.View.extend({
-	template: Mustache.compile('<li class="list-group-item">'+
+	initialize: function(options){
+		this.creador = options.creador
+	},
+	templateCreador: Mustache.compile('<li class="list-group-item">'+
 							   		'<span class="badge">'+'{{fecha}}'+'</span>'+'{{contenido}}<br>'+
-							   		'<input type="button" class="btn btn-primary btn-xs btn-modificar" value="Modificar"> '+
-							   		'<input type="button" class="btn btn-danger btn-xs btn-borrar" value="Borrar">'+
+							   		'<input type="button" class="btn btn-primary btn-xs btn-modificar" value="Modificar" /> '+
+							   		'<input type="button" class="btn btn-danger btn-xs btn-borrar" value="Borrar" />'+
+							   '</li>'),
+	templateDefecto: Mustache.compile('<li class="list-group-item">'+
+							   		'<span class="badge">'+'{{fecha}}'+'</span>'+'{{contenido}}<br>'+
 							   '</li>'),
 	render: function(){
-		this.el.innerHTML = this.template(this.model.toJSON())
+		if(this.creador){
+			this.el.innerHTML = this.templateCreador(this.model.toJSON())
+		} else {
+			this.el.innerHTML = this.templateDefecto(this.model.toJSON())
+		}
 	}
 });
 
 var ActualizacionesView = Backbone.View.extend({
 	initialize: function(options){
-		this.collection = new Actualizaciones({id: options.id})
+		this.collection = new Actualizaciones({id: options.id, creador: options.creador})
 		_.bindAll(this, "renderActualizacion");
 		this.collection.fetch({reset: true});
 		this.listenTo(this.collection, "reset", this.render);		
@@ -34,11 +45,13 @@ var ActualizacionesView = Backbone.View.extend({
 
 	render: function(){
       	this.collection.each(this.renderActualizacion)
-      	this.el.innerHTML+='<br><input type="button" class="btn btn-primary" value="Añadir Actualizacion">';
+      	if(this.collection.creador){
+      		this.el.innerHTML+='<br><input type="button" class="btn btn-primary" value="Añadir Actualizacion">';
+      	}
 	},
 
 	renderActualizacion : function(actu){
-		var vistaActu = new ActualizacionView({model: actu});
+		var vistaActu = new ActualizacionView({model: actu, creador: this.collection.creador});
 		vistaActu.render();
 		this.el.appendChild(vistaActu.el);
 	}
