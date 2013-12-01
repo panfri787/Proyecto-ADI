@@ -339,6 +339,7 @@
           id_peticion = {{id}}
         {{/peticion}}
         rellenaCabecera();
+        fv = new FirmasView({id: id_peticion });
         //mostrarPanelFirmas();
         autor_peticion = document.getElementById("email_autor").innerHTML
         var esAutor = esAutorDePeticion(autor_peticion)

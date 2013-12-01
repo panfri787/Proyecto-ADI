@@ -8,13 +8,6 @@ var FirmaModelo = Backbone.Model.extend({
 		comentario: '',
 		publica: false
 	},
-	toString: function() {
-		var cad = this.get('nombre') + " " + this.get('apellidos') + " " + this.get('email');
-		if(this.get('publica'))
-			cad += " firma PUBLICA";
-		else
-			cad += " firma NO PUBLICA";
-	},
 	// Si ya estoy logueado obtengo los datos del usuario(nombre, apellidos, email)
 	datosUsuario: function(login) {
 		xhr = new XMLHttpRequest();
@@ -30,47 +23,27 @@ var FirmaModelo = Backbone.Model.extend({
 		}
 		xhr.send();
 	}
-
 })
 
 // Coleccion de Firma
 var FirmaCollection = Backbone.Collection.extend({
 	model: FirmaModelo,
+	initialize: function(options) {
+		this.id = options.id;
+	},
 	// url para hacer la peticion
-	urlRoot: function() {
-		return this.document.url() + '/firmas/';
-	}
+	url: function() {
+		return 'api/peticiones/' + this.id + '/firmas/'
+	} 
 })
 
 // Vista de la firma
 var FirmaView = Backbone.View.extend({
-	className: "firma", // NI ZORRA PORQUE NO TENGO NINGUNA CLASS ASÍ
-	// Creo el template con mustache, TODO: Comprobar cuando el nombre es NULL poner desconocido
-	template: Mustache.compile('<blockquote><p>{{comentario}}</p><small><b>{{nombre}}</b>{{fecha}}</small></blockquote>'),
 	render: function() {
-		this.ac.innnerHTML = this.template(this.model.toJSON());
-	}
-})
-
-// Vista
-var FirmasView = Backbone.View.extend({
-	initialize: function() {
-		this.collection = new FirmaCollection();
-		_.bindAll(this, "renderPanel");
-		this.collection.fetch({reset: true});
-		this.listenTo(this.collection, "reset", this.render)
-	},
-	el: '#panelFirmas',
-	ac: '#firmasRecientes',
-	// Se llama cada vez que haya que dibujar la vista
-	render: function() {
-		this.collection.each(this.renderPanel);
-	},
-	// Muestra el panel de firmas
-	renderPanel: function() {
+		//this.ac.innnerHTML = this.template(this.model.toJSON());
 		// Compruebo si se esta logueado para mostrar unos campos u otros
 		if(localStorage.login === undefined) {
-			document.getElementById('panelFirmas').innerHTML =
+			this.el.innerHTML = 
 			'<fieldset><legend>Firma esta petición</legend>'+
 			'<div class="form-group"><label for="inputNombre" class="col-lg-3 control-label">Nombre</label>'+
 			'<div class="col-lg-9"><input type="text" class="form-control" id="inputNombre" placeholder="Nombre"></div></div>'+
@@ -83,24 +56,38 @@ var FirmasView = Backbone.View.extend({
 	        '<span id="ayudaFirma" class="help-block">Explicanos tus motivos para firmar esta petición.</span></div></div>'+
 	        '<div class="form-group"><div class="col-lg-9 col-lg-offset-3"><div class="checkbox">'+
 			'<label><input id="aceptado" type="checkbox">  Acepto que mi firma se muestre publicamente.</label></div></div></div>'+
-	        '</fieldset>'
+	        '</fieldset>';
 		}
 		else {
-	       	document.getElementById('panelFirmas').innerHTML = 
+	       	this.el.innerHTML =
 	       	'<fieldset><legend>Firma esta petición</legend>'+
 			'<div class="form-group"><label for="textComentario" class="col-lg-3 control-label">Comentario</label>'+
 	        '<div class="col-lg-8"><textarea id="motivosArea" class="form-control" rows="3" id="textComentario" style="margin: 0px -6.84375px 0px 0px; width: 378px; height: 85px;"></textarea>'+
 	        '<span id="ayudaFirma" class="help-block">Explicanos tus motivos para firmar esta petición.</span></div></div>'+
 	        '<div class="form-group"><div class="col-lg-9 col-lg-offset-3"><div class="checkbox">'+
 			'<label><input id="aceptado" type="checkbox">  Acepto que mi firma se muestre publicamente.</label></div></div></div>'+
-	        '</fieldset>'
+	        '</fieldset>';
 		}
+	}
+})
+
+// Vista
+var FirmasView = Backbone.View.extend({
+	initialize: function() {
+		this.collection = new FirmaCollection({id: this.options.id});
+		_.bindAll(this, "renderPanel");
+		this.collection.fetch({reset: true});
+		this.listenTo(this.collection, "reset", this.render)
 	},
-	// Actualizaré las firmas recientes
-	renderFirma: function(firma) {
-		var firmaView = new FirmaView({model:firma});
+	el: '#panelFirmas',
+	// Dibuja el panel de firmas
+	render: function() {
+		this.collection.each(this.renderPanel)
+	},
+	renderPanel: function() {
+		var firmaView = new FirmaView({model: firma});
 		firmaView.render();
-		this.ac.appendChild(firmaView.ac);
+		this.el.appendChild(firmaView.el);
 	},
 	// Evento que recoge los datos y hace la firma
 	eventoFirmar: function() {
@@ -124,12 +111,9 @@ var FirmasView = Backbone.View.extend({
 			else {
 				f.datosUsuario(localStorage.login);
 			}
-			// Añado a la coleccion
-			this.collection.add(f);
 			// Guardo
 			f.save();
-			// Actualizo las firmas recientes
-			this.renderFirma(f);
+			// TODO: Llevar a la url que muestra el json de la firma enviada
 		}
 	},
 	events: {
@@ -138,7 +122,6 @@ var FirmasView = Backbone.View.extend({
 })
 
 var fv;
-window.onload= function() {
-	fv = new FirmasView();
-	console.log("dentro");
+window.onload = function() {
+	console.log(id_peticion)
 }
