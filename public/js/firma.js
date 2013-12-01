@@ -73,8 +73,8 @@ var FirmaView = Backbone.View.extend({
 
 // Vista
 var FirmasView = Backbone.View.extend({
-	initialize: function() {
-		this.collection = new FirmaCollection({id: this.options.id});
+	initialize: function(options) {
+		this.collection = new FirmaCollection({id: options.id});
 		_.bindAll(this, "renderPanel");
 		this.collection.fetch({reset: true});
 		this.listenTo(this.collection, "reset", this.render)
