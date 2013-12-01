@@ -94,11 +94,11 @@
         </div>
       </div>
 
-      <div class="row">
+      <div id="fila-bajo" class="row">
       	<div class="col-lg-6">
       		<h2 class="text-primary">Actualizaciones</h2>
-      		<ul class="list-group">
-      			<li class="list-group-item">
+      		<ul class="list-group" id="actualizaciones">
+      			<!--<li class="list-group-item">
       				<span class="badge">10/10/2013</span>
       				Alcanzadas 5 firmas.	
       			</li>
@@ -108,7 +108,7 @@
       				<p>
       					<img src="img/peticiones/{{peticion.id}}.jpg" alt="#" width="72">
       				</p>
-      			</li>
+      			</li>-->
       		</ul>
       	</div>
       	<div id="firmasRecientes" class="col-lg-6">
@@ -329,8 +329,10 @@
     <!-- mustache para templating, tirando la casa por la ventana -->
     <script src="public/js/lib/mustache.js"></script>
     <script src="public/js/firma.js"></script>
+    <script type="text/javascript" src="public/js/actualizaciones.js"></script>
 
     <script type="text/javascript">
+      var vistaActualizaciones 
       window.onload = function() {
         {{#peticion}}
           id_peticion = {{id}}
@@ -338,6 +340,7 @@
         rellenaCabecera();
         fv = new FirmasView({id: id_peticion });
         //mostrarPanelFirmas();
+        vistaActualizaciones = new ActualizacionesView({id: id_peticion})
       }
     </script>
 </body>
