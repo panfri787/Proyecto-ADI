@@ -44,15 +44,43 @@ var ActualizacionesView = Backbone.View.extend({
 	el: "#actualizaciones",
 
 	render: function(){
+		this.el.innerHTML+='<h2 class="text-primary">Actualizaciones</h2>'+'<ul class="list-group" id="actualizaciones-lista"></ul>'
       	this.collection.each(this.renderActualizacion)
       	if(this.collection.creador){
-      		this.el.innerHTML+='<br><input type="button" class="btn btn-primary" value="Añadir Actualizacion">';
+      		this.el.innerHTML+='<br><p id="actualizacion-editor"></p>';
+      		this.el.innerHTML+='<br><span class="col-lg-10"><input id="btn-actu" type="button" class="btn btn-primary" value="Añadir Actualizacion" /></span>';
+      		this.el.innerHTML+='<input id="btn-enviar" type="button" style="visibility: hidden" class="btn btn-primary" value="Enviar"/><br><br>';
       	}
 	},
 
 	renderActualizacion : function(actu){
 		var vistaActu = new ActualizacionView({model: actu, creador: this.collection.creador});
 		vistaActu.render();
-		this.el.appendChild(vistaActu.el);
+		document.getElementById("actualizaciones-lista").appendChild(vistaActu.el);
+	},
+
+	mostrarEditor : function(){
+		editor = document.getElementById("actualizacion-editor");
+		editor.innerHTML = "Haga click aquí para añadir su actualizacion."
+		jQuery('#actualizacion-editor').hallo();
+		document.getElementById("btn-actu").style.visibility="hidden";
+		document.getElementById("btn-enviar").style.visibility="visible";
+	},
+
+	enviarActualizacion : function(){
+		jQuery('#actualizacion-editor').hallo({editable: false});
+		var m_actualizacion = new ActualizacionModel();
+		m_actualizacion.set("contenido", document.getElementById("actualizacion-editor").innerHTML);
+		document.getElementById("actualizacion-editor").innerHTML="";
+		this.collection.add(m_actualizacion);
+		m_actualizacion.save();
+		this.renderActualizacion(m_actualizacion);
+		document.getElementById("btn-actu").style.visibility="visible";
+		document.getElementById("btn-enviar").style.visibility="hidden";
+	},
+
+	events: {
+		"click #btn-actu" : "mostrarEditor",
+		"click #btn-enviar" : "enviarActualizacion"
 	}
 });
