@@ -70,7 +70,6 @@ var FirmasView = Backbone.View.extend({
 	},
 	// Evento que recoge los datos y hace la firma
 	eventoFirmar: function() {
-		var usuario = new Object();
 		// Recojo los valores de los campos
 		if(document.getElementById('motivosArea').value != "") {
 			// Creo una nueva firma
