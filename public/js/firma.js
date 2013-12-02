@@ -1,5 +1,5 @@
 
-// Modelo
+// Modelo de Firma
 var FirmaModelo = Backbone.Model.extend({
 	defaults: {
 		nombre: '',
@@ -7,21 +7,6 @@ var FirmaModelo = Backbone.Model.extend({
 		email: '',
 		comentario: '',
 		publica: false
-	},
-	// Si ya estoy logueado obtengo los datos del usuario(nombre, apellidos, email)
-	datosUsuario: function(login) {
-		xhr = new XMLHttpRequest();
-		xhr.open('GET', '/api/usuarios/' + login, true);
-		xhr.onreadystatechange = function() {
-			if(this.readyState == 4)
-				if(this.status == 200) {
-					var usuario = JSON.parse(xhr.responseText);
-					this.set('nommbre', usuario.nombre);
-					this.set('apellidos', usuario.apellidos);
-					this.set('email', usuario.email);
-				}
-		}
-		xhr.send();
 	}
 })
 
@@ -34,16 +19,15 @@ var FirmaCollection = Backbone.Collection.extend({
 	// url para hacer la peticion
 	url: function() {
 		return 'api/peticiones/' + this.id + '/firmas/'
-	} 
+	}
 })
 
 // Vista de la firma
 var FirmaView = Backbone.View.extend({
 	render: function() {
-		//this.ac.innnerHTML = this.template(this.model.toJSON());
 		// Compruebo si se esta logueado para mostrar unos campos u otros
 		if(localStorage.login === undefined) {
-			this.el.innerHTML = 
+			document.getElementById("panelFirmas").innerHTML = 
 			'<fieldset><legend>Firma esta petición</legend>'+
 			'<div class="form-group"><label for="inputNombre" class="col-lg-3 control-label">Nombre</label>'+
 			'<div class="col-lg-9"><input type="text" class="form-control" id="inputNombre" placeholder="Nombre"></div></div>'+
@@ -59,7 +43,7 @@ var FirmaView = Backbone.View.extend({
 	        '</fieldset>';
 		}
 		else {
-	       	this.el.innerHTML =
+	       	document.getElementById("panelFirmas").innerHTML =
 	       	'<fieldset><legend>Firma esta petición</legend>'+
 			'<div class="form-group"><label for="textComentario" class="col-lg-3 control-label">Comentario</label>'+
 	        '<div class="col-lg-8"><textarea id="motivosArea" class="form-control" rows="3" id="textComentario" style="margin: 0px -6.84375px 0px 0px; width: 378px; height: 85px;"></textarea>'+
@@ -75,23 +59,18 @@ var FirmaView = Backbone.View.extend({
 var FirmasView = Backbone.View.extend({
 	initialize: function(options) {
 		this.collection = new FirmaCollection({id: options.id});
-		_.bindAll(this, "renderPanel");
-		this.collection.fetch({reset: true});
-		this.listenTo(this.collection, "reset", this.render)
+		this.id = options.id;
+		this.render();
 	},
-	el: '#panelFirmas',
+	el: "#panelBoton",
 	// Dibuja el panel de firmas
 	render: function() {
-		this.collection.each(this.renderPanel)
-	},
-	renderPanel: function() {
-		var firmaView = new FirmaView({model: firma});
+		var firmaView = new FirmaView();
 		firmaView.render();
-		this.el.appendChild(firmaView.el);
 	},
 	// Evento que recoge los datos y hace la firma
 	eventoFirmar: function() {
-		console.log("en el evento");
+		var usuario = new Object();
 		// Recojo los valores de los campos
 		if(document.getElementById('motivosArea').value != "") {
 			// Creo una nueva firma
@@ -107,13 +86,13 @@ var FirmasView = Backbone.View.extend({
 				f.set('apellidos', document.getElementById('inputApellidos').value);
 				f.set('email', document.getElementById('inputEmail').value);
 			}
-			// Realizo una peticion al modelo para solicitar los datos del login
-			else {
-				f.datosUsuario(localStorage.login);
-			}
+			// Añado a la colección
+			this.collection.add(f);
 			// Guardo
 			f.save();
-			// TODO: Llevar a la url que muestra el json de la firma enviada
+			// Firma enviada
+			console.log("Firma enviada")
+			window.location = "peticion?id=" + this.id;
 		}
 	},
 	events: {
