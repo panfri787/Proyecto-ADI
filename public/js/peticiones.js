@@ -203,7 +203,7 @@ var mostrarFirmaID = function() {
 var esAutorDePeticion = function(email){
 	if(localStorage.getItem("login")==email){
 		div = document.getElementById("actualizaciones");
-		div.innerHTML+='<br><p id="actualizacion-editor"></p>';
+		div.innerHTML+='<p id="actualizacion-editor"></p>';
   		div.innerHTML+='<br><span class="col-lg-10"><input id="btn-actu" type="button" class="btn btn-primary" value="Añadir Actualizacion" /></span>';
   		div.innerHTML+='<input id="btn-enviar" type="button" style="visibility: hidden" class="btn btn-primary" value="Enviar"/><br><br>';
   		return true

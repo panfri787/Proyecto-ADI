@@ -24,7 +24,7 @@ var ActualizacionView = Backbone.View.extend({
 							   		'<input type="button" class="btn btn-primary btn-xs btn-modificar" value="Modificar"> '+
 							   		'<input type="button" class="btn btn-danger btn-xs btnBorrar" value="Borrar">'),
 
-	templateEdicion: Mustache.compile('<span class="badge">'+'{{fecha}}'+'</span>'+'<p id="editable">{{contenido}}<p><br>'+
+	templateEdicion: Mustache.compile('<p id="editable">{{contenido}}<p><br>'+
 							   		'<input type="button" class="btn btn-primary btn-xs btn-enviar" value="Enviar">'),
 
 	templateDefecto: Mustache.compile('<span class="badge">'+'{{fecha}}'+'</span>'+'{{contenido}}<br>'),
@@ -42,7 +42,12 @@ var ActualizacionView = Backbone.View.extend({
 		} else {
 			editando = true
 			this.el.innerHTML = this.templateEdicion(this.model.toJSON())
-			jQuery('#editable').hallo();
+			$('#editable').hallo({
+				editable: true,
+				plugins: {
+				    'halloformat': {}
+				}});
+			$('#editable').focus();
 		}
 	},
 
@@ -51,9 +56,16 @@ var ActualizacionView = Backbone.View.extend({
 		this.remove();
 	},
 
+	enviarModificacion: function(){
+		this.model.set("contenido", $('#editable').html())
+		this.model.save();
+		this.render();
+		editando = false;
+	},
 	events: {
        "click .btnBorrar" : "borrarActualizacion",
-       "click .btn-modificar" : "editarActualizacion"
+       "click .btn-modificar" : "editarActualizacion",
+       "click .btn-enviar" : "enviarModificacion"
     }
 });
 
@@ -80,13 +92,18 @@ var ActualizacionesView = Backbone.View.extend({
 	mostrarEditor : function(){
 		editor = document.getElementById("actualizacion-editor");
 		editor.innerHTML = "Haga click aquí para añadir su actualizacion."
-		jQuery('#actualizacion-editor').hallo({editable: true});
+		$('#actualizacion-editor').hallo({editable: true,
+										  plugins: {
+										    'halloformat': {"formattings": {"bold": true, "italic": true}}
+										  }
+										});
+		$('#actualizacion-editor').focus();
 		document.getElementById("btn-actu").style.visibility="hidden";
 		document.getElementById("btn-enviar").style.visibility="visible";
 	},
 
 	enviarActualizacion : function(){
-		jQuery('#actualizacion-editor').hallo({editable: false});
+		$('#actualizacion-editor').hallo({editable: false});
 		var m_actualizacion = new ActualizacionModel();
 		m_actualizacion.set("contenido", document.getElementById("actualizacion-editor").innerHTML);
 		document.getElementById("actualizacion-editor").innerHTML="";
