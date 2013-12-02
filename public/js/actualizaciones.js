@@ -12,25 +12,49 @@ var Actualizaciones = Backbone.Collection.extend({
 	}
 });
 
+var editando = false;
+
 var ActualizacionView = Backbone.View.extend({
 	initialize: function(options){
 		this.creador = options.creador
 	},
-	templateCreador: Mustache.compile('<li class="list-group-item">'+
-							   		'<span class="badge">'+'{{fecha}}'+'</span>'+'{{contenido}}<br>'+
-							   		'<input type="button" class="btn btn-primary btn-xs btn-modificar" value="Modificar" /> '+
-							   		'<input type="button" class="btn btn-danger btn-xs btn-borrar" value="Borrar" />'+
-							   '</li>'),
-	templateDefecto: Mustache.compile('<li class="list-group-item">'+
-							   		'<span class="badge">'+'{{fecha}}'+'</span>'+'{{contenido}}<br>'+
-							   '</li>'),
+	tagName: "li",
+	className: "list-group-item",
+	templateCreador: Mustache.compile('<span class="badge">'+'{{fecha}}'+'</span>'+'{{contenido}}<br>'+
+							   		'<input type="button" class="btn btn-primary btn-xs btn-modificar" value="Modificar"> '+
+							   		'<input type="button" class="btn btn-danger btn-xs btnBorrar" value="Borrar">'),
+
+	templateEdicion: Mustache.compile('<span class="badge">'+'{{fecha}}'+'</span>'+'<p id="editable">{{contenido}}<p><br>'+
+							   		'<input type="button" class="btn btn-primary btn-xs btn-enviar" value="Enviar">'),
+
+	templateDefecto: Mustache.compile('<span class="badge">'+'{{fecha}}'+'</span>'+'{{contenido}}<br>'),
 	render: function(){
 		if(this.creador){
-			this.el.innerHTML = this.templateCreador(this.model.toJSON())
+			this.el.innerHTML = this.templateCreador(this.model.toJSON());
 		} else {
-			this.el.innerHTML = this.templateDefecto(this.model.toJSON())
+			this.el.innerHTML = this.templateDefecto(this.model.toJSON());
 		}
-	}
+	},
+
+	editarActualizacion: function(){
+		if(editando){
+			return
+		} else {
+			editando = true
+			this.el.innerHTML = this.templateEdicion(this.model.toJSON())
+			jQuery('#editable').hallo();
+		}
+	},
+
+	borrarActualizacion: function(){
+		this.model.destroy();
+		this.remove();
+	},
+
+	events: {
+       "click .btnBorrar" : "borrarActualizacion",
+       "click .btn-modificar" : "editarActualizacion"
+    }
 });
 
 var ActualizacionesView = Backbone.View.extend({
@@ -44,13 +68,7 @@ var ActualizacionesView = Backbone.View.extend({
 	el: "#actualizaciones",
 
 	render: function(){
-		this.el.innerHTML+='<h2 class="text-primary">Actualizaciones</h2>'+'<ul class="list-group" id="actualizaciones-lista"></ul>'
       	this.collection.each(this.renderActualizacion)
-      	if(this.collection.creador){
-      		this.el.innerHTML+='<br><p id="actualizacion-editor"></p>';
-      		this.el.innerHTML+='<br><span class="col-lg-10"><input id="btn-actu" type="button" class="btn btn-primary" value="Añadir Actualizacion" /></span>';
-      		this.el.innerHTML+='<input id="btn-enviar" type="button" style="visibility: hidden" class="btn btn-primary" value="Enviar"/><br><br>';
-      	}
 	},
 
 	renderActualizacion : function(actu){
@@ -62,7 +80,7 @@ var ActualizacionesView = Backbone.View.extend({
 	mostrarEditor : function(){
 		editor = document.getElementById("actualizacion-editor");
 		editor.innerHTML = "Haga click aquí para añadir su actualizacion."
-		jQuery('#actualizacion-editor').hallo();
+		jQuery('#actualizacion-editor').hallo({editable: true});
 		document.getElementById("btn-actu").style.visibility="hidden";
 		document.getElementById("btn-enviar").style.visibility="visible";
 	},
