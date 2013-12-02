@@ -84,7 +84,6 @@
 	  				<p>
               <span class="col-lg-9">
                 <a href="/muevete/usuario?login={{peticion.creador.login}}">{{peticion.creador.nombre}} {{peticion.creador.apellidos}}</a>
-                <p style="visibility:hidden;" id="email_autor">{{peticion.creador.login}}</p>
               </span>
               <span class="col-lg-1">
                 <a href="/muevete/usuario?login={{peticion.creador.login}}"> <img width="70" alt="#" src="img/perfiles/{{peticion.creador.login}}.jpg"> </a>
@@ -177,6 +176,8 @@
 			<h6 class="text-muted">Aplicaciones Distribuidas en Internet - 2013 - Universidad de Alicante</h6>
 		</div>
 	</div>
+
+  <p style="visibility:hidden;" id="email_autor">{{peticion.creador.login}}</p>
 
   <div id="overLogin" class="overboxlogin">
       <div class="contentLightbox">
