@@ -1,8 +1,4 @@
-img/* 
-/META-INF/*
-/WEB-INF/*
+/web/public/img/* 
 .idea/*
-/img/perfiles/*
-/img/peticiones/*
-Tomcat.dpf
-/img/*
+/web/public/img/perfiles/*
+/web/public/img/peticiones/*

@@ -1,0 +1,254 @@
+ <!DOCTYPE html>
+
+
+<html>
+
+	<head>
+		<title>Muevete.org</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="stylesheet/bootstrap.css" media="screen" />
+	</head>
+
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a href="/muevete/index" class="navbar-brand">Muevete.org</a>
+				</div>
+				<ul id="listaCabecera" class="nav navbar-nav navbar-right">
+					<li><a href="javascript:showLoginLightbox()">Login</a></li>
+					<li><a href="javascript:showLightbox()">Registrarse</a></li>
+	            </ul>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="page-header" id="banner">
+		        <div class="row">
+					<div class="col-lg-12">
+						<h1>Peticiones destacadas</h1>
+					</div>
+	        	</div>
+      		</div>
+
+	      	<div class="row">
+	      		{{#destacadas}}
+	      		<div class="col-lg-12">
+					<div class="jumbotron">
+						<div class="col-lg-3">
+							<img alt="#" width="200" src="img/peticiones/{{id}}.jpg">
+						</div>
+						<div class="col-lg-9">
+							<h2><strong>{{titulo}}</strong></h2>
+						</div>	
+						<ul class="nav nav-pills">
+							<li class="col-lg-10">
+								<p>Firmas conseguidas
+			            			<span class="badge">{{firmasConseguidas}}</span>
+			            		</p>
+			            		<div class="progress progress-striped activate">
+									<div class="progress-bar" style="width: {{firmasConseguidas}}%"></div>
+								</div>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-lg" href="/muevete/peticion?id={{id}}">Ver peticion</a>
+							</li>	
+						</ul>      
+			        </div>
+			    </div>
+			{{/destacadas}}
+	      	</div>
+
+	      	<!-- Nuevo modal para crear la peticion -->
+			<div class="modal fade" id="overPeticion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				        <h4 class="modal-title" id="myModalLabel">Crear Petición</h4>
+				      </div>
+				      <div class="modal-body">
+				      	<div id="alert-crearPeticion" class="alert alert-danger alert-dismissable" style="display: none;">
+				      	</div>
+				      	<div id="alert-peticionCreada" class="alert alert-success alert-dismissable" style="display: none;"></div>
+				      	<div id="divTitulo" class="form-group">
+		                    <label for="inputTitulo" class="control-label">Título</label>
+		                    <input type="text" class="form-control" id="inputTitulo" placeholder="Título">
+		                </div>
+		                <div id="divFecha" class="form-group">
+		                    <label for="inputFecha" class="control-label">Fecha</label> 
+		                    <input type="date" class="form-control" id="inputFecha" placeholder="DD/MM/AAAA">
+		                </div>
+		                <div id="divFirmas" class="form-group">
+		                    <label for="inputFirmas" class="control-label">Objetivo Firmas</label>
+		                    <input type="number" class="form-control" id="inputFirmas" placeholder="Objetivo Firmas">
+		                </div>
+		                <div id="divDescripcion" class="form-group">
+		                	<label for="textDescripcion" class="control-label">Descripción</label>
+		                	<textarea id="textDescripcion" class="form-control" placeholder="Descripción"></textarea>
+		                </div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				        <button id="btn-enviar-peticion"type="button" class="btn btn-primary">Enviar Petición</button>
+				      </div>
+				    </div>
+				  </div>
+			</div>
+
+	    </div>
+	    <div class="panel-footer">
+			<div class="container">
+				<p class="text-muted">Creado por Pablo Varela Gandía y Pablo Verdú Romero</p>
+				<h6 class="text-muted">Aplicaciones Distribuidas en Internet - 2013 - Universidad de Alicante</h6>
+			</div>
+		</div>
+
+		<div id="overLogin" class="overboxlogin">
+			<div class="contentLightbox">
+				<form class="form-horizontal">
+	  				<fieldset>
+	  					<legend>
+	  						Login
+	  					</legend>
+	  					<div class="form-group" id="divLogin1">
+		                    <label for="inputLogin" class="col-lg-3 control-label">Login</label>
+		                    <div class="col-lg-5">
+		                      <input type="text" class="form-control" id="inputLogin" placeholder="Login">
+		                    </div>
+		                </div>
+		                <div class="form-group" id="divPassword1">
+		                    <label for="inputPassword" class="col-lg-3 control-label">Password</label>
+		                    <div class="col-lg-5">
+		                      <input type="password" class="form-control" id="inputPassword" placeholder="Passwords">
+		                    </div>
+		                </div>
+		                <div class="form-group"></div>
+			            <div class="form-group">
+			            	<div class="col-lg-9 col-lg-offset-3">
+			            		<input type="button" class="btn btn-primary" value="Enviar" id="botonLogin"> 
+			            	</div>
+			            </div>
+			            <div class="form-group"></div>
+			            <div class="form-group"></div>
+	  				</fieldset>
+	  			</form>
+				<a href="javascript:hideLoginLightbox();">Cerrar LightBox</a>
+			</div>
+			<div id="alertaLogin400" class="alertLogin">
+				<div class="alert alert-dismissable alert-danger">
+					<button id="closeAlertaLogin" type="button" class="close">×</button>
+					Hay campos obligatorios vacios.
+				</div>
+			</div>
+
+			<div id="alertaLogin403" class="alertLogin">
+				<div class="alert alert-dismissable alert-danger">
+					<button id="closeAlerta403" type="button" class="close">×</button>
+					No existe un usuario registrado con esos datos.
+				</div>
+			</div>
+		</div>
+		<div id="fadeLogin" class="fadebox">&nbsp;</div>
+		<div id="over" class="overboxregistro">
+			<div class="contentLightbox">
+				<form class="form-horizontal">
+	  				<fieldset>
+	  					<legend>
+	  						Registrarse
+	  					</legend>
+	  					<div id="divNombre" class="form-group">
+		                    <label for="inputNombre" class="col-lg-3 control-label">Nombre</label>
+		                    <div class="col-lg-5">
+		                      <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
+		                    </div>
+		                </div>
+		                <div id="divApellidos" class="form-group">
+		                    <label for="inputApellidos" class="col-lg-3 control-label">Apellidos</label>
+		                    <div class="col-lg-5">
+		                      <input type="text" class="form-control" id="inputApellidos" placeholder="Apellidos">
+		                    </div>
+		                </div>
+		                <div id="divEmail" class="form-group">
+		                    <label for="inputEmail" class="col-lg-3 control-label">Email</label>
+		                    <div class="col-lg-5">
+		                      <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+		                    </div>
+		                </div>
+		                <div id="divRePassword" class="form-group">
+		                    <label for="inputRePassword" class="col-lg-3 control-label">Password</label>
+		                    <div class="col-lg-5">
+		                      <input type="password" class="form-control"  id="inputRePassword" placeholder="Password">
+		                    </div>
+		                </div>
+		                <div id="divRePassword2" class="form-group">
+		                    <label for="inputRePassword2" class="col-lg-3 control-label">Repite Password</label>
+		                    <div class="col-lg-5">
+		                      <input type="password" class="form-control"  id="inputRePassword2" placeholder="Repite Password">
+		                    </div>
+		                </div>
+			            <div class="form-group">
+			            	<div class="col-lg-9 col-lg-offset-3">
+			            		<input id="botonRegistro" type="button" value="Enviar" class="btn btn-primary">
+			            	</div>
+			            </div>
+	  				</fieldset>
+	  			</form>
+				<a href="javascript:hideRegistroLightbox();">Cerrar LightBox</a>
+			</div>
+			<div id="alertRegistro400" class="alertRegistro">
+				<div class="alert alert-dismissable alert-danger">
+					<button id="closeRegistroAlert400" type="button" class="close">×</button>
+					Hay campos obligatorios vacios.
+				</div>
+			</div>
+			
+			<div id="alertRegistroWarning" class="alertRegistro">
+				<div class="alert alert-dismissable alert-warning">
+					<button id="closeRegistroWarning" type="button" class="close">x</button>
+					La contraseña debe coincidir
+				</div>
+			</div>
+
+			<div id="alertRegistroErrorBD" class="alertRegistro">
+				<div class="alert alert-dismissable alert-danger">
+					<button id="closeRegistroErrorBD" type="button" class="close">x</button>
+					Error al enviar la petición al servidor
+				</div>
+			</div>
+
+			<div id="alertRegistroErrorEmail" class="alertRegistro">
+				<div class="alert alert-dismissable alert-warning">
+					<button id="closeRegistroErrorEmail" type="button" class="close">x</button>
+					El email ya está en uso
+				</div>
+			</div>
+		</div>
+		<div id="fade" class="fadebox">&nbsp;</div>
+
+		<div id="alertLogin200" class="alertLogin">
+			<div class="alert alert-dismissable alert-success">
+				<button id="closeAlert200" type="button" class="close">×</button>
+				Login realizado correctamente.
+			</div>
+		</div>
+
+		<div id="alertRegistro201" class="alertLogin">
+			<div class="alert alert-dismissable alert-success">
+				<button id="closeRegistroAlert201" type="button" class="close">x</button>
+				Usuario registrado correctamente
+		</div>
+
+		<script type="text/javascript" src="js/login-registro.js"></script>
+		<script type="text/javascript" src="js/peticiones.js"></script>
+
+		<script src="//code.jquery.com/jquery.js"></script>
+		<script src="js/lib/bootstrap-3.0.0/js/bootstrap.min.js"></script>
+
+		<script type="text/javascript">
+			window.onload = function(){
+				rellenaCabecera();
+			}
+		</script>
+	</body>
+</html>
