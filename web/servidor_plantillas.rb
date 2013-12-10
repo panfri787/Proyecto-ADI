@@ -15,12 +15,17 @@ class ServidorPlantillas < Sinatra::Base
 		mustache :index
 	end
 
+	get '/peticion' do
+		@peticion = PeticionService.new.get params[:id]
+		mustache :peticion
+	end
+
 	configure do
 		'Arrancando la aplicacion...'
 		init_datamapper
 		Tilt.register Tilt::MustacheTemplate, 'html'
 
-		#@servicioPeticiones = PeticionService.new		
+		#servicioPeticiones, PeticionService.new		
 	end
 	
 end

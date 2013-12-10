@@ -5,6 +5,9 @@ class Usuario
 
 	property :login, String, :key => true
 	property :password, String, :required => true
+	property :nombre, String
+	property :apellidos, String
+	property :registrado, Boolean
 
 	has n, :peticiones, 'Peticion'
 end

@@ -6,7 +6,9 @@ class Peticion
 	property :id, Serial
 	property :titulo, String
 	property :firmasConseguidas, Integer
+	property :firmasObjetivo, Integer
 	property :destacada, Boolean
+	property :texto, Text
 
 	#Faltan muchos campos!!!
 
