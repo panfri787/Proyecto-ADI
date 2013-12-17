@@ -160,7 +160,7 @@
 	    		req = new XMLHttpRequest();
 		    	var id = document.getElementById('inputLogin').value;
 		    	var pass = document.getElementById('inputPassword').value;
-		    	req.open('POST', 'login', true);
+		    	req.open('POST', 'auth/login', true);
 		    	req.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
 		    	req.onreadystatechange = callbackLogin;
 		    	req.send('login='+id+'&password='+pass);
