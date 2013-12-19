@@ -1,7 +1,7 @@
 #Estos son los .rb donde están las 3 aplicaciones
 require './servidor_plantillas'
 require './autentificacion'
-#require './api'
+require './api'
 
 #todas las peticiones cuya URL comience por 'muevete' irán a parar aquí
 map "/muevete" do
@@ -11,4 +11,9 @@ end
 map "/muevete/auth" do
 	use Rack::Session::Cookie
 	run ServidorAutentificacion
+end
+
+map "/muevete/api" do
+	use Rack::Session::Cookie
+  	run ServidorAPI
 end

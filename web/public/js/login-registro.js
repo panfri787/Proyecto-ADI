@@ -44,6 +44,9 @@
 		function logout() {
 			localStorage.removeItem('login');
 			window.location = "index";
+			req = new XMLHttpRequest();
+			req.open('GET', 'auth/logout', false)
+			req.send();
 		}
 
 		//Muestra el lightbox para registrar a un nuevo usuario.

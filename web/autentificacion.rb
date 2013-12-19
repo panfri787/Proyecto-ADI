@@ -5,6 +5,8 @@ require_relative "../negocio/usuario_service"
 
 class ServidorAutentificacion < Sinatra::Base
 
+	use Rack::Session::Pool, :expire_after => 60*60		
+
 	#Efectua el login contra el servidor validando los datos.
 	post '/login' do
 		if params[:login] == nil || params[:password] == nil
@@ -24,15 +26,6 @@ class ServidorAutentificacion < Sinatra::Base
 	#Desloguea a un usuario.
 	get '/logout' do
 		session.clear
-	end
-
-	#Metodo que comprueba si un usuario esta logueado o no.
-	def self.estaLogueado
-		if session[:usuario] != nil
-			true			
-		else
-			false
-		end
 	end
 
 	configure do
