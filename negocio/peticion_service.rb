@@ -23,4 +23,8 @@ class PeticionService
 		end
 	end
 
+	def addFirma(data)
+		FirmaDAO.new.addFirma data
+	end
+
 end

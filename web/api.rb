@@ -96,7 +96,8 @@ class ServidorAPI < Sinatra::Base
 			if(data['comentario'].nil?)
 				status 400
 			else
-				#
+				PeticionService.new.addFirma data
+				status 201
 			end
 		end
 	end
