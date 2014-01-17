@@ -61,6 +61,82 @@ class ServidorAPI < Sinatra::Base
 
 	end
 
+	#Maneja la peticion POST al api para crear una actualizacion de una peticion.
+	post '/peticiones/:id_pet/actualizaciones' do
+		if session[:usuario].nil?
+			status 403
+			"No conectado"
+		else
+			ps = PeticionService.new
+			p = ps.get params[:id_pet]
+			json = JSON.parse(request.body.read)
+			if p.creador.login == session[:usuario] 
+				act = ps.anyadir_actualizacion json, p
+				
+				status 201
+				headers \
+					'Location' => "api/peticiones/#{params[:id_pet]}/actualizaciones/#{act.id}"
+				act.to_json
+ 			else
+				status 403
+				"No es el propietario de la peticion"
+			end
+		end
+	end
+
+	#Maneja la peticion GET al api para devolver las actualizaciones de una peticion.
+	get '/peticiones/:id_pet/actualizaciones' do
+		lista = PeticionService.new.listar_actualizaciones params[:id_pet]
+		lista.to_json
+	end
+
+	#Maneja la peticion DELETE al api para borrar una actualizacion de una peticion.
+	delete '/peticiones/:id_pet/actualizaciones/:id_act' do
+		if session[:usuario].nil?
+			status 403
+			"No conectado"
+		else
+			ps = PeticionService.new
+			p = ps.get params[:id_pet]
+			if session[:usuario] == p.creador.login
+				if ps.borrarActualizacion params[:id_act]
+					status 200
+					"Actualizacion borrada"
+				else
+					status 500
+					"Error en el servidor"
+				end
+ 			else
+				status 403
+				"No estas autorizado a borrar esta actualizacion"
+			end
+		end
+	end
+
+	#Maneja la peticion PUT al api para modificar una actualizacion de una peticion.
+	put '/peticiones/:id_pet/actualizaciones/:id_act' do
+		if session[:usuario].nil?
+			status 403
+			"No conectado"
+		else
+			ps = PeticionService.new
+			p = ps.get params[:id_pet]
+			if session[:usuario] == p.creador.login
+				json = JSON.parse(request.body.read)
+				if ps.modificarActualizacion(json, params[:id_act])
+					status 200
+					"Actualizacion modificada"	
+				else
+					status 500
+					"Error en el servidor"
+				end
+			else
+				status 403
+				"No estas autorizado a modificar esta actualizacion"
+			end
+		end
+	end
+
 	#Comprueba que el login este disponible
 	get '/loginDisponible/:login' do
 		usuario = UsuarioService.new.get params[:login]

@@ -13,7 +13,7 @@ class Peticion
 
 	belongs_to :usuario
 	has n, :actualizaciones, 'Actualizacion'
-	has n, :firmas, 'Firma'
+	#has n, :firmas, 'Firma'
 
 	def creador
 		usuario
