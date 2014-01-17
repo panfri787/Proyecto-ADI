@@ -20,8 +20,45 @@ class ServidorAPI < Sinatra::Base
 		if usuario.nil?
 			status 400
 		else
-			usuario.to_json
+			if session[:usuario] == params[:login]
+				usuario.to_json
+			else
+				halt 403
+			end
 		end
+	end
+
+	#Maneja una peticion POST al API de la aplicacion para crear una peticion nueva.
+	post '/peticiones' do
+		if session[:usuario].nil?
+			status 403
+		else
+			u = UsuarioService.new.get session[:usuario]
+			json = JSON.parse(request.body.read)
+			if json["titulo"].nil? || json["fin"].nil? || json["texto"].nil? || json["firmasObjetivo"].nil?
+					status 400
+			else
+				id = PeticionService.new.crear json, u 
+				if id > 0
+					status 201
+					headers \
+						'Location' => "api/peticiones/#{id}" 
+				else
+					status 500
+				end
+			end
+		end
+	end
+
+	#Maneja la peticion GET al API que devuelve el recurso JSON de una peticion.
+	get '/peticiones/:id' do
+		if session[:usuario].nil?
+			status 403			
+		else
+			p = PeticionService.new.get params[:id]
+			p.to_json
+		end
+
 	end
 
 	#Comprueba que el login este disponible

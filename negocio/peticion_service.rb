@@ -14,4 +14,13 @@ class PeticionService
 		@dao.get id
 	end
 
+	def crear(datos, usuario)
+		pet = @dao.crear datos, usuario
+		if pet.nil?
+			-1
+		else
+			pet.id
+		end
+	end
+
 end
