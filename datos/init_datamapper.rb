@@ -1,6 +1,7 @@
 require "data_mapper"
 require_relative "../dominio/peticion"
 require_relative "../dominio/usuario"
+require_relative "../dominio/actualizacion"
 
 
 def init_datamapper
