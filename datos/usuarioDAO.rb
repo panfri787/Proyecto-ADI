@@ -7,7 +7,8 @@ class UsuarioDAO
 	end
 
 	# Deserializo el json para insertarlo en el dominio
-	def create(json)
-		Usuario.create(json)
+	def createUser(data)
+		Usuario.create(:login => data['login'], :password => data['password'],
+			:nombre => data['nombre'], :apellidos => data['apellidos'])
 	end
 end

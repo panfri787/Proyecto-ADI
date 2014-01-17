@@ -11,7 +11,7 @@ class UsuarioService
 		@dao.get id
 	end
 
-	def create(json)
-		@dao.create json
+	def createUser(data)
+		@dao.createUser data
 	end
 end

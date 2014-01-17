@@ -1,5 +1,6 @@
 require "sinatra/base"
 require "sinatra/reloader"
+require "json"
 require_relative "../datos/init_datamapper"
 require_relative "../negocio/usuario_service"
 require_relative "autentificacion.rb"
@@ -35,11 +36,17 @@ class ServidorAPI < Sinatra::Base
 	end
 
 	#Registro del usuario
-	#post '/usuarios' do
-		#usuario = JSON.parse(request.body.read)
+	post '/usuarios' do
+		request.body.rewind 
+		data = JSON.parse request.body.read
 		#Compruebo que los campos no esten vacios
-		#if(usuario.)
-	#end
+		if(data['login'].nil? || data['password'].nil? || data['nombre'].nil? || data['apellidos'].nil?)
+			status 400
+		else
+			UsuarioService.new.createUser data
+			status 201
+		end
+	end
 
 	configure do
 		init_datamapper
