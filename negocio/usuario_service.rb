@@ -10,4 +10,8 @@ class UsuarioService
 	def get(id)
 		@dao.get id
 	end
+
+	def create(json)
+		@dao.create json
+	end
 end

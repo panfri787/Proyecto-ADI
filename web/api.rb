@@ -61,6 +61,24 @@ class ServidorAPI < Sinatra::Base
 
 	end
 
+	#Comprueba que el login este disponible
+	get '/loginDisponible/:login' do
+		usuario = UsuarioService.new.get params[:login]
+		status 200
+		if usuario.nil?
+			body 'OK'
+		else
+			body 'no'	
+		end
+	end
+
+	#Registro del usuario
+	#post '/usuarios' do
+		#usuario = JSON.parse(request.body.read)
+		#Compruebo que los campos no esten vacios
+		#if(usuario.)
+	#end
+
 	configure do
 		init_datamapper
 	end
