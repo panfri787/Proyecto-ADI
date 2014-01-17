@@ -3,3 +3,4 @@
 /web/public/img/perfiles/*
 /web/public/img/peticiones/*
 /web/muevete_bd.sqlite
+/datos/muevete_bd.sqlite
