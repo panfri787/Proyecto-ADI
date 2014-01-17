@@ -2,3 +2,4 @@
 .idea/*
 /web/public/img/perfiles/*
 /web/public/img/peticiones/*
+/web/muevete_bd.sqlite
