@@ -85,6 +85,22 @@ class ServidorAPI < Sinatra::Base
 		end
 	end
 
+	#Firma de la peticion
+	post '/peticiones/:id/firmas/' do
+		if session[:usuario].nil?
+			status 403
+		else
+			request.body.rewind 
+			data = JSON.parse request.body.read
+			# Compruebo que el comentario no esté vacio
+			if(data['comentario'].nil?)
+				status 400
+			else
+				#
+			end
+		end
+	end
+
 	configure do
 		init_datamapper
 	end
