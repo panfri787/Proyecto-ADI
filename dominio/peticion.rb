@@ -12,6 +12,8 @@ class Peticion
 	property :fin, Date
 
 	belongs_to :usuario
+	has n, :actualizaciones, 'Actualizacion'
+	has n, :firmas, 'Firma'
 
 	def creador
 		usuario
