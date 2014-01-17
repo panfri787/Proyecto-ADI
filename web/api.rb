@@ -26,10 +26,11 @@ class ServidorAPI < Sinatra::Base
 	#Comprueba que el login este disponible
 	get '/loginDisponible/:login' do
 		usuario = UsuarioService.new.get params[:login]
+		status 200
 		if usuario.nil?
-			status 201
+			body 'OK'
 		else
-			status 400
+			body 'no'	
 		end
 	end
 
