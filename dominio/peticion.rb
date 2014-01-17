@@ -9,8 +9,7 @@ class Peticion
 	property :firmasObjetivo, Integer
 	property :destacada, Boolean
 	property :texto, Text
-
-	#Faltan muchos campos!!!
+	property :fin, Date
 
 	belongs_to :usuario
 
