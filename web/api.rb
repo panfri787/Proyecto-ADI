@@ -87,18 +87,13 @@ class ServidorAPI < Sinatra::Base
 
 	#Firma de la peticion
 	post '/peticiones/:id/firmas/' do
-		if session[:usuario].nil?
-			status 403
+		data = JSON.parse request.body.read
+		# Compruebo que el comentario no esté vacio
+		if data['comentario'].nil?
+			status 400
 		else
-			request.body.rewind 
-			data = JSON.parse request.body.read
-			# Compruebo que el comentario no esté vacio
-			if(data['comentario'].nil?)
-				status 400
-			else
-				PeticionService.new.addFirma data
-				status 201
-			end
+			PeticionService.new.addFirma data, params[:id]
+			status 201
 		end
 	end
 

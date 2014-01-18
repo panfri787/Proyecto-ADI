@@ -14,4 +14,9 @@ class PeticionDAO
 		pet.save
 		pet		
 	end
+
+	def modificarNumFirmas(id)
+		p = Peticion.get(id)
+		p.update(:firmasConseguidas => p.firmasConseguidas += 1)
+	end
 end

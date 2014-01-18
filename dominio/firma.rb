@@ -1,7 +1,7 @@
 require "data_mapper"
 
 class Firma
-	include DattaMapper::Resource
+	include DataMapper::Resource
 
 	property :id, Serial
 	property :comentario, String
@@ -11,6 +11,6 @@ class Firma
 	property :publica, Boolean
 
 	#Relacion a la que pertenece
-	belongs_to peticion
+	belongs_to :peticion
 	
 end

@@ -23,8 +23,13 @@ class PeticionService
 		end
 	end
 
-	def addFirma(data)
+	def addFirma(data,id)
 		FirmaDAO.new.addFirma data
+		self.incrementarFirma id
+	end
+
+	def incrementarFirma(id)
+		p = @dao.modificarNumFirmas id
 	end
 
 end

@@ -89,9 +89,10 @@ var FirmasView = Backbone.View.extend({
 			this.collection.add(f);
 			// Guardo
 			f.save();
+
 			// Firma enviada
 			console.log("Firma enviada")
-			window.location = "peticion?id=" + this.id;
+			setTimeout(function(){window.location = "peticion?id=" + this.id;}, 10000);
 		}
 	},
 	events: {
