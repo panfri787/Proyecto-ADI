@@ -17,6 +17,7 @@ class PeticionDAO
 
 	def modificarNumFirmas(id)
 		p = Peticion.get(id)
-		p.update(:firmasConseguidas => p.firmasConseguidas += 1)
+		numFirmas = p.firmasConseguidas
+		p.update(:firmasConseguidas => numFirmas += 1)
 	end
 end

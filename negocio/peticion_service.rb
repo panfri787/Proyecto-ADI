@@ -1,11 +1,13 @@
 require_relative "../datos/peticionDAO"
 require_relative "../datos/actualizacionDAO"
+require_relative "../datos/firmaDAO"
 
 class PeticionService
 
 	def initialize
 		@dao = PeticionDAO.new
 		@actDao = ActualizacionDAO.new
+		@firDao = FirmaDAO.new
 	end
 
 	def listar_destacadas()
@@ -43,7 +45,7 @@ class PeticionService
 	end
 
 	def addFirma(data,id)
-		FirmaDAO.new.addFirma data
+		@firDao.add data
 		self.incrementarFirma id
 	end
 
